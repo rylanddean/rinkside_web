@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Rinkside</title>
+  <meta name="description" content="Rinkside Privacy Policy — your data stays on your device. No tracking, no analytics, no third-party sharing.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--blue);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .btn-back:hover { color: var(--text); }
+
+    .btn-back svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ─── Page Hero ─── */
+    .page-hero {
+      padding: 72px 24px 56px;
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .page-hero .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero .meta {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ─── Privacy callout ─── */
+    .privacy-callout {
+      max-width: 760px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .privacy-callout-inner {
+      background: var(--surface-2);
+      border: 1px solid rgba(74, 159, 219, 0.25);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .privacy-callout-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .privacy-callout-inner p {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .privacy-callout-inner strong {
+      color: var(--blue);
+    }
+
+    /* ─── Content ─── */
+    .content-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 96px;
+    }
+
+    .policy-section {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+    }
+
+    .policy-section:last-child {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .policy-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .policy-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 1px;
+      flex-shrink: 0;
+      width: 24px;
+    }
+
+    .policy-section h2 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--text);
+    }
+
+    .policy-section p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .policy-section p:last-child { margin-bottom: 0; }
+
+    .policy-section ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .policy-section ul:last-child { margin-bottom: 0; }
+
+    .policy-section li {
+      font-size: 15px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.65;
+    }
+
+    .policy-section li::before {
+      content: "—";
+      color: var(--blue);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .policy-section a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .policy-section a:hover { text-decoration: underline; }
+
+    /* Sub-section heading inside a policy section */
+    .policy-subsection {
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    .policy-subsection h3 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    /* Contact block */
+    .contact-block {
+      margin-top: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+    }
+
+    .contact-block p {
+      margin-bottom: 0;
+    }
+
+    .contact-block p + p {
+      margin-top: 4px;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 52px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-brand img {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    footer p + p { margin-top: 6px; }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .page-hero { padding: 56px 20px 40px; }
+      .privacy-callout { padding: 0 20px; }
+      .content-wrap { padding: 0 20px 72px; }
+      .privacy-callout-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <a href="index.html" class="btn-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Back
+    </a>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <p class="section-label">Legal</p>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Effective Date: March 20, 2026 &nbsp;&middot;&nbsp; Last Updated: March 20, 2026</p>
+  </div>
+
+  <!-- Short-version callout -->
+  <div class="privacy-callout">
+    <div class="privacy-callout-inner">
+      <span class="privacy-callout-icon">🔒</span>
+      <p><strong>The short version:</strong> Rinkside does not collect, transmit, sell, or share your personal data with us or any third party. All data you enter stays on your device and, optionally, in your own private iCloud account.</p>
+    </div>
+  </div>
+
+  <!-- Policy Content -->
+  <div class="content-wrap">
+
+    <!-- 1. Introduction -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">01</span>
+        <h2>Introduction</h2>
+      </div>
+      <p>Rinkside ("the App") is a native iOS application designed for minor hockey coaches to manage player rosters and build line combinations. This Privacy Policy explains how we handle information when you use Rinkside.</p>
+    </div>
+
+    <!-- 2. Information You Enter -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">02</span>
+        <h2>Information You Enter Into the App</h2>
+      </div>
+      <p>Rinkside lets you store the following information locally on your device:</p>
+      <ul>
+        <li>Player first and last names</li>
+        <li>Jersey numbers</li>
+        <li>Player positions (Forward, Defense, Goalie)</li>
+        <li>Shooting hand (Left or Right)</li>
+        <li>Player photos (taken or chosen from your photo library)</li>
+        <li>Player notes</li>
+        <li>Team names and season labels</li>
+        <li>Line configurations and special teams units</li>
+      </ul>
+      <p>This information is entered by you, stored on your device, and never transmitted to us.</p>
+    </div>
+
+    <!-- 3. How Your Data Is Stored -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">03</span>
+        <h2>How Your Data Is Stored</h2>
+      </div>
+      <div class="policy-subsection">
+        <h3>On-Device Storage</h3>
+      </div>
+      <p>All data is stored locally on your iPhone or iPad using Apple's SwiftData framework. Your data is protected by your device's built-in security, including passcode and Face ID / Touch ID encryption.</p>
+      <div class="policy-subsection" style="display: flex; align-items: center; gap: 10px;">
+        <h3>iCloud Sync (Optional)</h3>
+        <span style="display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 100px; background: rgba(74, 159, 219, 0.12); color: var(--blue); border: 1px solid rgba(74, 159, 219, 0.25); letter-spacing: 0.4px; text-transform: uppercase;">Coming 2026</span>
+      </div>
+      <p>If you are signed in to iCloud on your device, Rinkside will automatically sync your data to your private iCloud account using Apple's CloudKit framework. This sync occurs in your own private iCloud container — only you can access it. We have no access to your iCloud data at any time.</p>
+      <p>If you are not signed in to iCloud, or prefer not to use it, the App functions fully offline without any sync.</p>
+      <div class="policy-subsection">
+        <h3>Photos</h3>
+      </div>
+      <p>Player photos are stored on your device and, if iCloud sync is enabled, in your private iCloud container as encrypted assets. Photos are never uploaded to any server we control.</p>
+    </div>
+
+    <!-- 4. Data We Do Not Collect -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">04</span>
+        <h2>Data We Do Not Collect</h2>
+      </div>
+      <p>Rinkside contains no analytics, no tracking SDKs, and no advertising libraries. We do not collect:</p>
+      <ul>
+        <li>Usage analytics or event tracking</li>
+        <li>Crash reports or diagnostics sent to us</li>
+        <li>Device identifiers or advertising IDs</li>
+        <li>Location data</li>
+        <li>Contacts or address book data</li>
+        <li>Any personally identifiable information about coaches or players</li>
+      </ul>
+      <p>There are no third-party SDKs, frameworks, or services embedded in Rinkside that collect data.</p>
+    </div>
+
+    <!-- 5. No Account Required -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">05</span>
+        <h2>No Account Required</h2>
+      </div>
+      <p>Rinkside does not require you to create an account or provide an email address. You do not log in to our servers. There is no sign-up, registration, or profile with us.</p>
+    </div>
+
+    <!-- 6. In-App Purchases -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">06</span>
+        <h2>In-App Purchases</h2>
+      </div>
+      <p>Rinkside offers an optional one-time "Full Unlock" purchase through Apple's App Store. All purchase transactions are handled entirely by Apple. We do not receive, store, or process your payment information. Apple's privacy policy governs App Store transactions.</p>
+    </div>
+
+    <!-- 7. App Permissions -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">07</span>
+        <h2>App Permissions</h2>
+      </div>
+      <p>Rinkside may request the following system permissions:</p>
+      <ul>
+        <li><strong style="color: var(--text);">Photo Library</strong> — to let you choose a photo for a player profile. Only the specific photo you select is accessed.</li>
+        <li><strong style="color: var(--text);">Camera</strong> — to let you take a photo directly for a player profile.</li>
+      </ul>
+      <p>You can grant or revoke these permissions at any time in your device's Settings app. If you deny a permission, the related feature will be unavailable but all other app functionality continues normally.</p>
+    </div>
+
+    <!-- 8. Children's Privacy -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">08</span>
+        <h2>Children's Privacy</h2>
+      </div>
+      <p>Rinkside is designed for use by adult coaches. The App does not knowingly collect personal information from children under the age of 13. Any information entered about minor players (such as names and jersey numbers) is stored only on the coach's device and is never transmitted to us.</p>
+      <p>If you are a parent or guardian and believe your child's information has been entered inappropriately, please contact us at the address below and we will assist you in deleting that data from the device.</p>
+    </div>
+
+    <!-- 9. Deleting Your Data -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">09</span>
+        <h2>Deleting Your Data</h2>
+      </div>
+      <p>Because all data is stored on your device (and optionally in your own iCloud account), you are in full control of deletion:</p>
+      <ul>
+        <li>Delete individual players or teams from within the App.</li>
+        <li>Delete all App data by uninstalling Rinkside from your device.</li>
+        <li>Remove iCloud-synced data by managing storage in Settings → [Your Name] → iCloud → Manage Storage.</li>
+      </ul>
+      <p>We hold no copies of your data on our servers, so there is nothing for us to delete on our end.</p>
+    </div>
+
+    <!-- 10. Third-Party Services -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">10</span>
+        <h2>Third-Party Services</h2>
+      </div>
+      <p>Rinkside does not integrate with any third-party services, analytics platforms, advertising networks, or social media SDKs. The only external service involved is Apple's iCloud / CloudKit, governed by Apple's own <a href="https://www.apple.com/privacy/" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+    </div>
+
+    <!-- 11. Data Security -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">11</span>
+        <h2>Data Security</h2>
+      </div>
+      <p>Your data benefits from the security protections built into iOS, including device encryption, secure enclave, and App Sandbox isolation. iCloud data is encrypted in transit and at rest by Apple.</p>
+      <p>Because we do not receive or store your data on any server, there is no central database that could be breached to expose your information.</p>
+    </div>
+
+    <!-- 12. Changes to This Privacy Policy -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">12</span>
+        <h2>Changes to This Privacy Policy</h2>
+      </div>
+      <p>We may update this Privacy Policy from time to time. If we make material changes, we will update the "Last Updated" date at the top of this document and, where appropriate, notify you through the App or the App Store listing.</p>
+    </div>
+
+    <!-- 13. Contact Us -->
+    <div class="policy-section">
+      <div class="policy-section-header">
+        <span class="policy-num">13</span>
+        <h2>Contact Us</h2>
+      </div>
+      <p>If you have questions or concerns regarding this Privacy Policy, please contact:</p>
+      <div class="contact-block">
+        <p><strong>Rinkside</strong></p>
+        <p><a href="mailto:ryland.w.dean.dev@gmail.com">ryland.w.dean.dev@gmail.com</a></p>
+      </div>
+      <p style="margin-top: 16px;">We will respond to privacy inquiries within 30 days.</p>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Built for the Rink. Made for Coaches.</p>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
