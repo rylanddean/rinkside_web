@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rinkside — Built for the Rink. Made for Coaches.</title>
+  <meta name="description" content="Rinkside is the iOS coaching app for minor hockey coaches. Manage rosters, build lines, track stats, and coach smarter — all offline-first.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --red:         #C0392B;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 9px 20px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    /* ─── Hero ─── */
+    #hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 96px 24px 80px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .hero-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 24px;
+      margin-bottom: 36px;
+      box-shadow: 0 24px 72px rgba(74, 159, 219, 0.2);
+    }
+
+    #hero h1 {
+      font-size: clamp(44px, 9vw, 76px);
+      font-weight: 700;
+      letter-spacing: -2.5px;
+      line-height: 1.0;
+      margin-bottom: 20px;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    #hero .tagline {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    #hero .sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      max-width: 440px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-cta .btn-primary {
+      font-size: 16px;
+      padding: 14px 34px;
+    }
+
+    .beta-note {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ─── Shared section styles ─── */
+    .section-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 48px;
+      color: var(--text);
+    }
+
+    /* ─── Features ─── */
+    #features { background: var(--surface); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--bg);
+      padding: 30px 28px;
+      border: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .feature-card:hover { background: var(--surface); }
+
+    .feature-icon {
+      font-size: 26px;
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 100px;
+      margin-top: 12px;
+      background: rgba(74, 159, 219, 0.12);
+      color: var(--blue);
+      border: 1px solid rgba(74, 159, 219, 0.25);
+    }
+
+    /* ─── Screenshots ─── */
+    #screenshots { overflow: hidden; }
+
+    .screenshots-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 8px 24px 24px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .screenshots-track::-webkit-scrollbar { display: none; }
+
+    .phone-frame {
+      flex: 0 0 auto;
+      width: 210px;
+      scroll-snap-align: start;
+      border-radius: 38px;
+      overflow: hidden;
+      border: 2px solid rgba(74, 159, 219, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0,0,0,0.3);
+      background: #000;
+    }
+
+    .phone-frame img {
+      width: 100%;
+      display: block;
+    }
+
+    .scroll-hint {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      padding: 0 24px;
+    }
+
+    /* ─── Pricing ─── */
+    #pricing { background: var(--surface); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .pricing-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--blue-dark);
+      background: var(--surface-2);
+      position: relative;
+    }
+
+    .pricing-tag {
+      display: inline-block;
+      position: absolute;
+      top: -13px;
+      left: 32px;
+      background: var(--blue-dark);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      padding: 3px 12px;
+      border-radius: 100px;
+      text-transform: uppercase;
+    }
+
+    .pricing-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .pricing-price {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 4px;
+      line-height: 1;
+    }
+
+    .pricing-price-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .pricing-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pricing-card li {
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .pricing-card li::before {
+      content: "✓";
+      color: var(--blue);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 52px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-brand img {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    footer p + p { margin-top: 6px; }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .section-inner { padding: 64px 20px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      #hero { padding: 64px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Join the Beta</a>
+  </nav>
+
+  <!-- Hero -->
+  <div id="hero">
+    <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside app icon" class="hero-icon">
+    <h1>Rinkside</h1>
+    <p class="tagline">Built for the Rink. Made for Coaches.</p>
+    <p class="sub">The iOS app that helps minor hockey coaches manage their roster, build lines, track stats, and coach smarter — fully offline.</p>
+    <div class="hero-cta">
+      <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Request TestFlight Access</a>
+      <span class="beta-note">Currently in beta &mdash; coming soon to the App Store</span>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="section-inner">
+      <p class="section-label">Features</p>
+      <h2 class="section-title">Everything you need at the bench</h2>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <span class="feature-icon">👥</span>
+          <h3>Roster Management</h3>
+          <p>Search, filter, and manage your full team. Track every player's position, jersey number, and stats — all from one screen.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📋</span>
+          <h3>Player Profiles &amp; Report Cards</h3>
+          <p>Every player gets a full stats breakdown and a coaching report card. Shooting, passing, skating, Hockey IQ — tracked every game.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🤖</span>
+          <h3>Apple Intelligence Coaching</h3>
+          <p>On-device AI surfaces season summaries, top strengths, and development focus areas for each player. Private — no data leaves your device.</p>
+          <span class="badge">Apple Intelligence</span>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🏒</span>
+          <h3>Line Builder</h3>
+          <p>Build even strength lines, defensive pairs, power play units, and penalty kill units in seconds. Rearrange on the fly.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📅</span>
+          <h3>Schedule &amp; Standings</h3>
+          <p>Log your season games and tournament results. League standings update automatically as you track games.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🎮</span>
+          <h3>In-Game Mode</h3>
+          <p>Track score, shots on goal, and period right from the bench. Your ES, PP, and PK lines are always one tap away.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📖</span>
+          <h3>On-Device Rulebook</h3>
+          <p>Ask any hockey rule question and get an instant answer from the official Hockey Canada rulebook (2024–2026). Works completely offline.</p>
+          <span class="badge">On-device AI</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section id="screenshots">
+    <div class="section-inner" style="padding-bottom: 16px;">
+      <p class="section-label">Screenshots</p>
+      <h2 class="section-title">See it in action</h2>
+    </div>
+    <p class="scroll-hint">Scroll to explore →</p>
+    <div class="screenshots-track">
+      <div class="phone-frame">
+        <img src="screenshots/IMG_0295.PNG" alt="Roster screen">
+      </div>
+      <div class="phone-frame">
+        <img src="screenshots/IMG_0301.PNG" alt="Line builder">
+      </div>
+      <div class="phone-frame">
+        <img src="screenshots/IMG_0299.PNG" alt="Player report card">
+      </div>
+      <div class="phone-frame">
+        <img src="screenshots/IMG_0300.PNG" alt="Apple Intelligence coaching">
+      </div>
+      <div class="phone-frame">
+        <img src="screenshots/IMG_0302.PNG" alt="Schedule and standings">
+      </div>
+      <div class="phone-frame">
+        <img src="screenshots/IMG_0304.PNG" alt="In-game mode">
+      </div>
+      <div class="phone-frame">
+        <img src="screenshots/IMG_0305.PNG" alt="On-device rulebook">
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="section-inner">
+      <p class="section-label">Pricing</p>
+      <h2 class="section-title">Free to start. One-time unlock.</h2>
+      <div class="pricing-grid">
+
+        <div class="pricing-card">
+          <h3>Free</h3>
+          <div class="pricing-price">$0</div>
+          <p class="pricing-price-sub">No subscription. No catch.</p>
+          <ul>
+            <li>1 team</li>
+            <li>Up to 25 players</li>
+            <li>Full roster management</li>
+            <li>Player profiles &amp; report cards</li>
+            <li>Apple Intelligence coaching</li>
+            <li>Even strength line builder</li>
+            <li>Schedule &amp; standings</li>
+            <li>In-game mode</li>
+            <li>On-device rulebook</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card featured">
+          <span class="pricing-tag">Full Unlock</span>
+          <h3>Unlock Everything</h3>
+          <div class="pricing-price">One-time</div>
+          <p class="pricing-price-sub">Pay once, own it forever.</p>
+          <ul>
+            <li>Everything in Free</li>
+            <li>Unlimited teams</li>
+            <li>Unlimited players</li>
+            <li>Power play unit builder</li>
+            <li>Penalty kill unit builder</li>
+            <li>Lineup image sharing</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Built for the Rink. Made for Coaches.</p>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
