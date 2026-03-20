@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Started — Rinkside</title>
+  <meta name="description" content="Learn how to add players to your roster and import your team's schedule and stats in Rinkside.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --red:         #C0392B;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.35);
+    }
+
+    /* ─── Page hero ─── */
+    .page-hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 72px 24px 56px;
+      text-align: center;
+    }
+
+    .page-hero .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      margin-bottom: 18px;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ─── TOC ─── */
+    .toc {
+      max-width: 720px;
+      margin: 0 auto 16px;
+      padding: 0 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.35);
+      background: var(--surface-2);
+    }
+
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ─── Guide section ─── */
+    .guide-section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .guide-section:first-of-type {
+      border-top: none;
+    }
+
+    .guide-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .guide-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .guide-header-text .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .guide-header-text h2 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      line-height: 1.15;
+    }
+
+    /* ─── Steps ─── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .step:nth-child(even) {
+      direction: rtl;
+    }
+
+    .step:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .step-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    .step-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--blue);
+      border-radius: 50%;
+    }
+
+    .step-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .step-content p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .step-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 4px;
+      padding: 12px 16px;
+      background: rgba(74, 159, 219, 0.06);
+      border: 1px solid rgba(74, 159, 219, 0.15);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .step-tip-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-phone {
+      flex-shrink: 0;
+      width: 200px;
+      border-radius: 36px;
+      overflow: hidden;
+      border: 2px solid rgba(74, 159, 219, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0,0,0,0.3);
+      background: #000;
+    }
+
+    .step-phone img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ─── Divider ─── */
+    .section-divider {
+      max-width: 960px;
+      margin: 0 auto;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 72px 24px;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      margin-bottom: 14px;
+    }
+
+    .cta-section p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 34px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-brand img {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 20px;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 680px) {
+      nav { padding: 14px 20px; }
+
+      .step {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .step:nth-child(even) {
+        direction: ltr;
+      }
+
+      .step-phone {
+        width: 180px;
+        margin: 0 auto;
+      }
+
+      .guide-section { padding: 48px 20px; }
+      .page-hero { padding: 52px 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <a href="index.html" class="btn-ghost">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back
+    </a>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <p class="section-label">Getting Started</p>
+    <h1>Up and running in minutes</h1>
+    <p>Everything you need to add your players and load your team's schedule — step by step.</p>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <a href="#add-players">
+      <span class="toc-num">1</span>
+      Add Players to Your Roster
+    </a>
+    <a href="#import-schedule">
+      <span class="toc-num">2</span>
+      Import Schedule &amp; Stats
+    </a>
+  </div>
+
+  <!-- Section 1: Add Players -->
+  <div class="guide-section" id="add-players">
+    <div class="guide-header">
+      <div class="guide-num">1</div>
+      <div class="guide-header-text">
+        <p class="section-label">Roster Setup</p>
+        <h2>Add players to your roster</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Open the Roster tab and tap the + button</h3>
+          <p>From the bottom navigation, select the Roster tab. Tap the <strong>+</strong> button in the top-right corner to open the Add Player form.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0295.PNG" alt="Roster screen with player list">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Enter the player's name and jersey number</h3>
+          <p>Type in their first and last name, then set a jersey number between 1 and 99. Jersey numbers must be unique within your team.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0296.PNG" alt="Add Player form">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Set position, shoots side, and development path</h3>
+          <p>Choose their position (Forward, Defence, or Goalie), which side they shoot, and optionally assign a development path to help track their progress through the season.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">💡</span>
+            <span>Development paths let you group players by skill level or coaching priority — great for tracking individual growth over the season.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0297.PNG" alt="Player position and development path">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 4</span>
+          <h3>Add a photo and coaching notes (optional)</h3>
+          <p>Tap the avatar at the top to add a player photo from your library or camera. Use the Notes field to jot down coaching observations, areas of focus, or anything else you want to remember.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">📸</span>
+            <span>Photos are stored privately on your device and synced to iCloud — they never leave your personal storage.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0303.PNG" alt="Player photo and notes">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 5</span>
+          <h3>Tap Save — your player is on the roster</h3>
+          <p>Hit <strong>Save</strong> in the top-right and the player is added instantly. Repeat for every player on your team. The roster screen supports search and filters so you can find anyone fast.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🔒</span>
+            <span>Free accounts support up to 25 players on one team. Unlock everything for unlimited players across unlimited teams.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0295.PNG" alt="Completed roster">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 2: Import Schedule -->
+  <div class="guide-section" id="import-schedule">
+    <div class="guide-header">
+      <div class="guide-num">2</div>
+      <div class="guide-header-text">
+        <p class="section-label">Schedule &amp; Stats</p>
+        <h2>Import your team's schedule and stats</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Go to Schedule and tap "Find Your League"</h3>
+          <p>Open the Schedule tab, then tap the <strong>Find Your League</strong> button to start the import flow. Rinkside will look up your league from the official association database.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0302.PNG" alt="Schedule screen">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Search for your league or association</h3>
+          <p>Type your league or association name — for example, <em>"Upper Ottawa Valley"</em>. Rinkside searches in real time and shows matching results.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🔍</span>
+            <span>Try searching by city, region, or association name. Partial matches work too — just type what you know.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Find Your League search screen">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Select your division</h3>
+          <p>Once you pick a league, you'll see all available divisions. Tap the one that matches your team — for example, <em>Competitive – Under 18</em> or <em>House B – Under 13</em>.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0299.PNG" alt="Select Division screen">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 4</span>
+          <h3>Find and select your team</h3>
+          <p>You'll see every team registered in your division. Use the filter bar to search by name, then tap your team to select it. Rinkside loads your games automatically.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">✅</span>
+            <span>After selecting your team you'll see how many games were found (e.g. "44 games loaded") before confirming.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0300.PNG" alt="Select Your Team screen">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 5</span>
+          <h3>Tap "This Is My Team" to confirm</h3>
+          <p>Tap the <strong>This Is My Team</strong> button at the bottom. Your full season schedule loads instantly — game dates, opponents, and locations are all pulled in. Stats update as you log results throughout the season.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">📶</span>
+            <span>Schedule import requires a network connection the first time. Once loaded, your schedule and stats are available completely offline.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0302.PNG" alt="Schedule loaded with games">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Ready to get on the ice?</h2>
+    <p>Rinkside is currently in beta. Request TestFlight access and start coaching smarter.</p>
+    <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Request TestFlight Access</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Built for the Rink. Made for Coaches.</p>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
