@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rinkside v1.1 — Fan Mode Is Here for the Whole Hockey Family</title>
+  <meta name="description" content="Rinkside v1.1 introduces Fan Mode — a dedicated view for hockey parents, grandparents, and fans to follow their player's season stats, career milestones, and more. Available on TestFlight now.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --red:         #C0392B;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 9px 20px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--text); }
+    .nav-link.active { color: var(--text); }
+
+    /* ─── Article Hero ─── */
+    .article-hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 48px;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .article-date {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .article-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: rgba(74, 159, 219, 0.12);
+      border: 1px solid rgba(74, 159, 219, 0.2);
+      border-radius: 100px;
+      padding: 3px 10px;
+    }
+
+    .article-hero h1 {
+      font-size: clamp(28px, 5vw, 46px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+    }
+
+    .article-hero .lede {
+      font-size: 19px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      border-left: 3px solid var(--blue);
+      padding-left: 20px;
+      max-width: 680px;
+    }
+
+    /* ─── Divider ─── */
+    .article-divider {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    /* ─── Article Body ─── */
+    .article-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+
+    .article-body p {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .article-body p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .article-body h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin: 56px 0 16px;
+      padding-top: 8px;
+    }
+
+    .article-body h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 36px 0 12px;
+    }
+
+    /* ─── Quote ─── */
+    .founder-quote {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--blue);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 28px 32px;
+      margin: 40px 0;
+    }
+
+    .founder-quote blockquote {
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .founder-quote cite {
+      font-size: 13px;
+      font-style: normal;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ─── Feature Cards ─── */
+    .feature-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin: 28px 0;
+      transition: border-color 0.2s;
+    }
+
+    .feature-section:hover {
+      border-color: rgba(74, 159, 219, 0.25);
+    }
+
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .feature-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .feature-header h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .feature-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f0c040;
+      background: rgba(240, 192, 64, 0.1);
+      border: 1px solid rgba(240, 192, 64, 0.2);
+      border-radius: 100px;
+      padding: 2px 8px;
+      margin-left: 4px;
+    }
+
+    .feature-section p {
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+
+    /* ─── Stats Grid ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0 0;
+    }
+
+    .stats-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+
+    .stats-card-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .stats-card ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stats-card ul li {
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stats-card ul li::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+
+    /* ─── Pricing Block ─── */
+    .pricing-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .pricing-tier {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+    }
+
+    .pricing-tier.featured {
+      border-color: rgba(74, 159, 219, 0.3);
+      background: var(--surface-2);
+    }
+
+    .pricing-tier-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .pricing-tier.featured .pricing-tier-label {
+      color: var(--blue);
+    }
+
+    .pricing-tier h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 4px;
+    }
+
+    .pricing-price {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .pricing-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .pricing-tier ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .pricing-tier ul li {
+      font-size: 14px;
+      color: var(--text-muted);
+      padding: 5px 0;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .pricing-tier ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* ─── CTA ─── */
+    .article-cta {
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 36px;
+      margin-top: 56px;
+    }
+
+    .article-cta h2 {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin: 0 0 12px;
+    }
+
+    .article-cta p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .article-cta .btn-primary {
+      font-size: 15px;
+      padding: 12px 28px;
+    }
+
+    /* ─── Back Link ─── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      margin-bottom: 32px;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .footer-brand img {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+    }
+
+    .footer-brand span {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(106, 141, 170, 0.6);
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .pricing-block { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .founder-quote { padding: 20px 20px; }
+      .founder-quote blockquote { font-size: 16px; }
+      .article-hero .lede { font-size: 17px; }
+      .feature-section { padding: 22px 20px; }
+      .article-cta { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="getting-started.html" class="nav-link">Getting Started</a>
+      <a href="support.html" class="nav-link">Support</a>
+      <a href="press.html" class="nav-link active">Press</a>
+      <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Join the Beta</a>
+    </div>
+  </nav>
+
+  <!-- Article Hero -->
+  <div class="article-hero">
+    <a href="press.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Press Room
+    </a>
+    <div class="article-meta">
+      <span class="article-date">March 22, 2026</span>
+      <span class="article-badge">v1.1 &mdash; Fan Mode</span>
+    </div>
+    <h1>Rinkside v1.1 — Fan Mode Is Here for the Whole Hockey Family</h1>
+    <p class="lede">Rinkside was built for coaches. Version 1.1 opens it up to everyone in the stands. Fan Mode gives hockey parents, grandparents, and fans a dedicated place to follow their player's season — goals, assists, penalty minutes, career totals — without a single coaching tool in sight.</p>
+  </div>
+
+  <hr class="article-divider">
+
+  <!-- Article Body -->
+  <div class="article-body">
+
+    <p>Since the beta launched, the most common question from outside the coaching staff has been some version of: <em>"Can I use this too?"</em> A parent wants to track their kid's goals and assists. A grandparent wants to see how many games their grandchild has played this season. A sibling wants to know if their brother is on a point streak.</p>
+
+    <p>Rinkside v1.1 is the answer to that question. Available now on TestFlight, this release introduces <strong>Fan Mode</strong> — a completely separate view within the app designed from the ground up for the people in the stands, not on the bench.</p>
+
+    <div class="founder-quote">
+      <blockquote>"The coaching side of Rinkside was always the core of what I was building. But I kept getting the same message from parents: 'How do I use this?' Fan Mode is for them. It's the same love for the game, just from a different angle — tracking a kid's season the way a parent actually wants to track it."</blockquote>
+      <cite>— Rylan Dean, Creator of Rinkside</cite>
+    </div>
+
+    <p>Fan Mode is completely independent from the coaching experience. Coaches keep everything they had — roster management, line builder, game day command center, AI coaching insights. Fans get their own clean, focused view. The two modes coexist in a single app, so a coach who's also a hockey parent can use both.</p>
+
+    <h2>Fan Mode, Explained</h2>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">👪</span>
+        <h3>A Dedicated View for Fans &amp; Families</h3>
+      </div>
+      <p>Fan Mode is a separate section of Rinkside built for anyone who wants to follow a player without needing access to coaching tools. Parents, grandparents, aunts, uncles, siblings — anyone who cares about a player on the ice but has no business touching a line card. The experience is intentionally simplified: add the players you want to follow, track their stats each game, and watch the season take shape. Fan Mode ships with its own onboarding flow that walks new users through setup in a few taps.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">📊</span>
+        <h3>Season Stats — Skaters &amp; Goalies</h3>
+      </div>
+      <p>Fan Mode tracks the numbers that matter to every hockey family. Log stats after each game and watch them accumulate through the season. The stat sheet is split by position so nothing feels out of place:</p>
+      <div class="stats-grid">
+        <div class="stats-card">
+          <div class="stats-card-label">Skaters</div>
+          <ul>
+            <li>Games Played</li>
+            <li>Goals</li>
+            <li>Assists</li>
+            <li>Penalty Minutes</li>
+          </ul>
+        </div>
+        <div class="stats-card">
+          <div class="stats-card-label">Goalies</div>
+          <ul>
+            <li>Wins / Losses / Ties</li>
+            <li>Goals Against</li>
+            <li>Goals Against Average</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🏆</span>
+        <h3>Career Stats — Across Multiple Seasons</h3>
+      </div>
+      <p>Once a player has two or more seasons logged in Fan Mode, their career totals surface automatically in the player list. Goals, assists, games played — all of it accumulates across seasons into a running career line. For parents who've been tracking their kid through bantam, midget, or rep hockey, this is the kind of view that starts to tell a real story about a player's development over time.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🔢</span>
+        <h3>Jersey Numbers Per Season</h3>
+      </div>
+      <p>Jersey numbers change. A player might wear #14 one season and #7 the next — whether by choice, a new team, or a coach's roster decision. Fan Mode stores jersey numbers on a per-season basis, so the history stays accurate and you're never looking at last year's number for this year's player. Each season gets its own entry, and the correct number is always shown in context.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">📷</span>
+        <h3>Player Photos with Crop Step</h3>
+      </div>
+      <p>Fan Mode supports player photos with a built-in crop step in the photo picker. Pick any photo from your library, frame the shot the way you want it, and save a clean, well-composed profile image for that player. No more stretched thumbnails or awkwardly framed team photos — the crop tool makes sure every profile picture looks intentional.</p>
+    </div>
+
+    <h2>Everything Else in v1.1</h2>
+
+    <p>Beyond Fan Mode, this release includes a handful of quality-of-life improvements that make the day-to-day experience tighter across the whole app.</p>
+
+    <p><strong>Edit Player Sheet</strong> — Fan Mode now includes a full Edit Player sheet, so you can update a player's name, position, jersey number, or photo at any point in the season without removing and re-adding them.</p>
+
+    <p><strong>Swipe to Delete</strong> — Players in the Fan Mode list can now be removed with a standard swipe-to-delete gesture, consistent with the rest of the iOS experience and what coaches already have in the roster view.</p>
+
+    <h2>Who Is Fan Mode For?</h2>
+
+    <p>Fan Mode is designed for anyone who's spent a season watching a player from the stands and wanted a better way to track it. <strong>Hockey parents</strong> who want to follow their child's goals and assists game by game. <strong>Grandparents</strong> who travel to games and want a running total to brag about at the dinner table. <strong>Siblings</strong> who keep score in their heads and now have somewhere to put it. <strong>Aunts and uncles</strong> who show up to every home game and want to feel more connected to the season.</p>
+
+    <p>It's not a coaching tool. It doesn't need to be. Fan Mode is for the people who care most about a player and wanted Rinkside to have a place for them too.</p>
+
+    <h2>Availability &amp; Pricing</h2>
+
+    <p>Rinkside v1.1 is available now on TestFlight. Fan Mode is available to everyone — free users can add one player to follow, and Full Unlock removes that limit entirely.</p>
+
+    <div class="pricing-block">
+      <div class="pricing-tier">
+        <div class="pricing-tier-label">Free</div>
+        <h3>Free</h3>
+        <div class="pricing-price">$0</div>
+        <p class="pricing-sub">No subscription. No catch.</p>
+        <ul>
+          <li>1 team, up to 25 players</li>
+          <li>Full roster management</li>
+          <li>Even strength line builder</li>
+          <li>Schedule &amp; standings</li>
+          <li>In-game mode</li>
+          <li>On-device rulebook</li>
+          <li>Fan Mode — 1 player</li>
+        </ul>
+      </div>
+      <div class="pricing-tier featured">
+        <div class="pricing-tier-label">Full Unlock</div>
+        <h3>Unlock Everything</h3>
+        <div class="pricing-price">$2.99</div>
+        <p class="pricing-sub">Pay once, own it forever.</p>
+        <ul>
+          <li>Everything in Free</li>
+          <li>Unlimited teams &amp; players</li>
+          <li>Fan Mode — unlimited players</li>
+          <li>Player profiles &amp; report cards</li>
+          <li>Apple Intelligence coaching</li>
+          <li>AI Lines Builder</li>
+          <li>Power play &amp; penalty kill builders</li>
+          <li>Lineup image export</li>
+          <li>Hockey card export</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="article-cta">
+      <h2>Ready to follow every game?</h2>
+      <p>Rinkside v1.1 with Fan Mode is available now on TestFlight — for coaches and the families cheering them on.</p>
+      <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Request TestFlight Access</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Built for the Rink. Made for Coaches.</p>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p><a href="privacy-policy.html">Privacy Policy</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
