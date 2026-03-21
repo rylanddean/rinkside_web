@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rinkside Beta Is Live — AI-Powered Coaching Tools for Minor Hockey</title>
+  <meta name="description" content="Rinkside is now available on TestFlight. Here's everything that's packed into the v1.0 beta: AI line building, game day command center, player development tracking, schedule import, and more.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 9px 20px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.3);
+    }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--text); }
+    .nav-link.active { color: var(--text); }
+
+    /* ─── Article Hero ─── */
+    .article-hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 48px;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .article-date {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .article-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: rgba(74, 159, 219, 0.12);
+      border: 1px solid rgba(74, 159, 219, 0.2);
+      border-radius: 100px;
+      padding: 3px 10px;
+    }
+
+    .article-hero h1 {
+      font-size: clamp(28px, 5vw, 46px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+    }
+
+    .article-hero .lede {
+      font-size: 19px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      border-left: 3px solid var(--blue);
+      padding-left: 20px;
+      max-width: 680px;
+    }
+
+    /* ─── Divider ─── */
+    .article-divider {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    /* ─── Article Body ─── */
+    .article-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+
+    .article-body p {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .article-body p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .article-body h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin: 56px 0 16px;
+      padding-top: 8px;
+    }
+
+    .article-body h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 36px 0 12px;
+    }
+
+    /* ─── Quote ─── */
+    .founder-quote {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--blue);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 28px 32px;
+      margin: 40px 0;
+    }
+
+    .founder-quote blockquote {
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .founder-quote cite {
+      font-size: 13px;
+      font-style: normal;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ─── Feature Cards ─── */
+    .feature-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin: 28px 0;
+      transition: border-color 0.2s;
+    }
+
+    .feature-section:hover {
+      border-color: rgba(74, 159, 219, 0.25);
+    }
+
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .feature-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .feature-header h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .feature-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f0c040;
+      background: rgba(240, 192, 64, 0.1);
+      border: 1px solid rgba(240, 192, 64, 0.2);
+      border-radius: 100px;
+      padding: 2px 8px;
+      margin-left: 4px;
+    }
+
+    .feature-section p {
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+
+    /* ─── Pricing Block ─── */
+    .pricing-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .pricing-tier {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+    }
+
+    .pricing-tier.featured {
+      border-color: rgba(74, 159, 219, 0.3);
+      background: var(--surface-2);
+    }
+
+    .pricing-tier-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .pricing-tier.featured .pricing-tier-label {
+      color: var(--blue);
+    }
+
+    .pricing-tier h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 4px;
+    }
+
+    .pricing-price {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .pricing-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .pricing-tier ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .pricing-tier ul li {
+      font-size: 14px;
+      color: var(--text-muted);
+      padding: 5px 0;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .pricing-tier ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* ─── CTA ─── */
+    .article-cta {
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 36px;
+      margin-top: 56px;
+    }
+
+    .article-cta h2 {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin: 0 0 12px;
+    }
+
+    .article-cta p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .article-cta .btn-primary {
+      font-size: 15px;
+      padding: 12px 28px;
+    }
+
+    /* ─── Back Link ─── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      margin-bottom: 32px;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .footer-brand img {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+    }
+
+    .footer-brand span {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(106, 141, 170, 0.6);
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .pricing-block { grid-template-columns: 1fr; }
+      .founder-quote { padding: 20px 20px; }
+      .founder-quote blockquote { font-size: 16px; }
+      .article-hero .lede { font-size: 17px; }
+      .feature-section { padding: 22px 20px; }
+      .article-cta { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="getting-started.html" class="nav-link">Getting Started</a>
+      <a href="support.html" class="nav-link">Support</a>
+      <a href="press.html" class="nav-link active">Press</a>
+      <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Join the Beta</a>
+    </div>
+  </nav>
+
+  <!-- Article Hero -->
+  <div class="article-hero">
+    <a href="press.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Press Room
+    </a>
+    <div class="article-meta">
+      <span class="article-date">March 20, 2026</span>
+      <span class="article-badge">Beta Launch</span>
+    </div>
+    <h1>Rinkside Beta Is Live — AI-Powered Coaching Tools for Minor Hockey</h1>
+    <p class="lede">After a first season behind the bench that exposed a real gap in what coaching tools could offer, Rinkside is now available on TestFlight. Here's everything packed into the beta — and why it exists at all.</p>
+  </div>
+
+  <hr class="article-divider">
+
+  <!-- Article Body -->
+  <div class="article-body">
+
+    <p>Rinkside is a new iOS app built from the ground up for minor hockey coaches. It's available today on TestFlight, with a full App Store release coming soon.</p>
+
+    <p>The app covers the full arc of the coaching experience: building and managing a roster, tracking player development throughout the season, running lines during a game, pulling in your schedule automatically, and using on-device AI to help make better decisions — all without a subscription, and without sending your data anywhere.</p>
+
+    <div class="founder-quote">
+      <blockquote>"I've been around minor hockey my whole life — as a player, as a goalie, then as a hockey parent cheering from the stands, and now in my first year behind the bench as a coach. That first season showed me pretty quickly that there was nothing out there that could help a coaching staff build effective lines or track a player's development over the course of a season. A big thank you to Ross Smith for pushing me to actually build something about it. What started as a simple line builder grew into something much bigger."</blockquote>
+      <cite>— Rylan Dean, Creator of Rinkside</cite>
+    </div>
+
+    <p>That's the honest origin of this app: one first-year coach, one clear problem, and a decision to build the solution. Here's what made it into the beta.</p>
+
+    <h2>What's Inside the Beta</h2>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🤖</span>
+        <h3>Apple Intelligence Coaching Insights <span class="feature-tag">Full Unlock</span></h3>
+      </div>
+      <p>Rinkside taps into <strong>Apple Intelligence</strong> to generate personalized coaching insights for each player on your roster — entirely on-device, with no data sent to a server. Fill out a player's report card with ratings across skating, shooting, defense, and more, add your own observations in the notes field, and Rinkside generates a coaching summary grounded in exactly what you've told it. It reads less like an AI output and more like a second opinion from someone who's watched every practice. Insights automatically regenerate when you update a player's card, so they stay current as the season progresses.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🏒</span>
+        <h3>AI Lines Builder <span class="feature-tag">Full Unlock</span></h3>
+      </div>
+      <p>Stop guessing and start building. The <strong>AI Lines Builder</strong> uses a custom scoring engine that evaluates your players' report card ratings and automatically suggests line combinations across all three forward lines and two defensive pairings. Coaches can review the strategy sheet, preview the full suggested lineup, and adjust from there. It handles even strength, power play, and penalty kill — giving you a structured starting point that reflects what you actually know about your players, not a random shuffle.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🎮</span>
+        <h3>Game Day Command Center</h3>
+      </div>
+      <p>Everything you need between whistles, in one place. The <strong>Game Day tab</strong> puts your line cards front and center, lets you tap to mark the active line currently on ice, and fires a configurable shift buzzer when it's time for a change. Track shots on goal and saves in real time, follow the live score, and scratch players who aren't dressed — all without ever leaving the screen. It's built to work in a cold arena with gloves on.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">📅</span>
+        <h3>Schedule &amp; League Integration</h3>
+      </div>
+      <p>Pull in your full season schedule automatically. Rinkside supports <strong>iCalendar import</strong> so you can sync directly from your league's scheduling system, and includes a native <strong>GameSheet integration</strong> that lets you search for your league, select your division, and import your schedule in a few taps. Game results are parsed automatically — including scores, ties, and practices — and your team record updates as the season goes. Tournament schedules are tracked separately, with their own wins, losses, and ties. A team record widget keeps the standings summary visible at the top of your schedule view all season long.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🃏</span>
+        <h3>Hockey Card Export <span class="feature-tag">Full Unlock</span></h3>
+      </div>
+      <p>Generate a <strong>hockey card-style graphic</strong> for any player on your roster and share it directly from the app. It's a small thing that goes a long way — coaches use it for end-of-season ceremonies, team social posts, or just to give a kid something to be proud of.</p>
+    </div>
+
+    <h2>Everything Else</h2>
+
+    <p>Beyond the five headline features, the beta ships with a lot more that makes the day-to-day of coaching easier:</p>
+
+    <p><strong>Roster &amp; Player Profiles</strong> — Build your full team roster with player details, photos, positions, and jersey numbers. Search and filter in seconds. Player profiles include a tabbed view for details, season stats, and coaching notes.</p>
+
+    <p><strong>Season Stats</strong> — Track skater and goalie stats throughout the season from the roster tab. Goals, assists, points, GAA, save percentage — the numbers that matter to a minor hockey coach.</p>
+
+    <p><strong>Point Streak Badges</strong> — Active point streaks are surfaced automatically on the roster list and player profile, along with a personal best badge so you can see when a player is in the form of their season.</p>
+
+    <p><strong>Power Play &amp; Penalty Kill Builders</strong> — Beyond even strength, Rinkside includes dedicated unit builders for special teams. Build your first and second PP unit and your PK pairings separately from your five-on-five lines.</p>
+
+    <p><strong>AirDrop Roster Transfer</strong> — Export your full roster as a <code>.rinksideroster</code> file and AirDrop it to another coach's device. Useful for assistant coaches, co-coaches, or season-to-season backups.</p>
+
+    <p><strong>Report Card Notifications</strong> — Rinkside will send a local notification when a player's report card hasn't been updated in a while, so player development tracking doesn't fall through the cracks mid-season.</p>
+
+    <p><strong>AI-Generated Avatars</strong> — Using Apple's Image Playground, Rinkside can generate a hockey-themed avatar for any player — a fun addition to the profile that kids genuinely get a kick out of.</p>
+
+    <p><strong>Multi-Team Support</strong> — Create, switch between, and manage multiple teams from a single app. Coaches who work with more than one team don't need a workaround.</p>
+
+    <h2>Pricing</h2>
+
+    <p>Rinkside is free to download with no subscription required. The free tier is built to cover the core coaching workflow for a single team.</p>
+
+    <div class="pricing-block">
+      <div class="pricing-tier">
+        <div class="pricing-tier-label">Free</div>
+        <h3>Free</h3>
+        <div class="pricing-price">$0</div>
+        <p class="pricing-sub">No subscription. No catch.</p>
+        <ul>
+          <li>1 team, up to 25 players</li>
+          <li>Full roster management</li>
+          <li>Even strength line builder</li>
+          <li>Schedule &amp; standings</li>
+          <li>In-game mode</li>
+          <li>On-device rulebook</li>
+        </ul>
+      </div>
+      <div class="pricing-tier featured">
+        <div class="pricing-tier-label">Full Unlock</div>
+        <h3>Unlock Everything</h3>
+        <div class="pricing-price">$2.99</div>
+        <p class="pricing-sub">Pay once, own it forever.</p>
+        <ul>
+          <li>Everything in Free</li>
+          <li>Unlimited teams &amp; players</li>
+          <li>Player profiles &amp; report cards</li>
+          <li>Apple Intelligence coaching</li>
+          <li>AI Lines Builder</li>
+          <li>Power play &amp; penalty kill builders</li>
+          <li>Lineup image export</li>
+          <li>Hockey card export</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="article-cta">
+      <h2>Ready to get on the ice?</h2>
+      <p>Rinkside is available now on TestFlight. Request access and start coaching smarter before the App Store launch.</p>
+      <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Request TestFlight Access</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Built for the Rink. Made for Coaches.</p>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p><a href="privacy-policy.html">Privacy Policy</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
