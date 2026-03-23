@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rinkside Wiki — Feature Guides</title>
+  <meta name="description" content="Step-by-step guides for every major Rinkside feature. Learn how to build lines, run a game, track stats, and more.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --red:         #C0392B;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--text); }
+    .nav-link.active { color: var(--text); }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 9px 20px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    /* ─── Page Hero ─── */
+    .page-hero {
+      text-align: center;
+      padding: 72px 24px 56px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      margin-bottom: 16px;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ─── Guide Grid ─── */
+    .guides-section {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px 96px;
+    }
+
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+
+    .guide-card:hover {
+      border-color: rgba(74, 159, 219, 0.35);
+      background: var(--surface-2);
+      transform: translateY(-2px);
+    }
+
+    .guide-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .guide-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: rgba(74, 159, 219, 0.10);
+      border: 1px solid rgba(74, 159, 219, 0.2);
+      border-radius: 100px;
+      padding: 3px 10px;
+    }
+
+    .guide-read-time {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .guide-card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .guide-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .guide-card-footer {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    .guide-card-footer svg {
+      transition: transform 0.2s;
+    }
+
+    .guide-card:hover .guide-card-footer svg {
+      transform: translateX(3px);
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 52px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-brand img {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    footer p + p { margin-top: 6px; }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .page-hero { padding: 56px 20px 40px; }
+      .guides-section { padding: 0 20px 72px; }
+      .guides-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="getting-started.html" class="nav-link">Getting Started</a>
+      <a href="support.html" class="nav-link">Support</a>
+      <a href="press.html" class="nav-link">Press</a>
+      <a href="wiki.html" class="nav-link active">Wiki</a>
+      <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Join the Beta</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <p class="section-label">Guides</p>
+    <h1>Rinkside Wiki</h1>
+    <p>Step-by-step guides for every major feature — from building your lines to coaching with Apple Intelligence.</p>
+  </div>
+
+  <!-- Guide Cards -->
+  <div class="guides-section">
+    <div class="guides-grid">
+
+      <a href="guide-building-lines.html" class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-number">Guide 1</span>
+          <span class="guide-read-time">5 min read</span>
+        </div>
+        <h3>Building Your Lines</h3>
+        <p>Set up your even-strength forward lines and defensive pairs before game time.</p>
+        <div class="guide-card-footer">
+          Read guide
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.5 2.5L10 7L5.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="guide-in-game-mode.html" class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-number">Guide 2</span>
+          <span class="guide-read-time">6 min read</span>
+        </div>
+        <h3>Running a Game (In-Game Mode)</h3>
+        <p>Track line changes, shifts, and ice time during a live game — right from the bench.</p>
+        <div class="guide-card-footer">
+          Read guide
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.5 2.5L10 7L5.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="guide-player-stats.html" class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-number">Guide 3</span>
+          <span class="guide-read-time">4 min read</span>
+        </div>
+        <h3>Player Stats &amp; Report Cards</h3>
+        <p>Review skater performance across the season and share individual report cards.</p>
+        <div class="guide-card-footer">
+          Read guide
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.5 2.5L10 7L5.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="guide-goalie-stats.html" class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-number">Guide 4</span>
+          <span class="guide-read-time">3 min read</span>
+        </div>
+        <h3>Goalie Stats</h3>
+        <p>Track save percentages, goals against average, and goalie performance over time.</p>
+        <div class="guide-card-footer">
+          Read guide
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.5 2.5L10 7L5.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="guide-fan-mode.html" class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-number">Guide 5</span>
+          <span class="guide-read-time">3 min read</span>
+        </div>
+        <h3>Fan Mode</h3>
+        <p>Give fans in the stands a live view of the current lineup straight from your phone.</p>
+        <div class="guide-card-footer">
+          Read guide
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.5 2.5L10 7L5.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="guide-rulebook.html" class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-number">Guide 6</span>
+          <span class="guide-read-time">4 min read</span>
+        </div>
+        <h3>On-Device Rulebook</h3>
+        <p>Look up hockey rules instantly — no internet connection required, right at the bench.</p>
+        <div class="guide-card-footer">
+          Read guide
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.5 2.5L10 7L5.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="guide-apple-intelligence.html" class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-number">Guide 7</span>
+          <span class="guide-read-time">5 min read</span>
+        </div>
+        <h3>Apple Intelligence Coaching</h3>
+        <p>Use on-device AI to surface personalised insights and smarter coaching suggestions.</p>
+        <div class="guide-card-footer">
+          Read guide
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.5 2.5L10 7L5.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p><a href="privacy-policy.html">Privacy Policy</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
