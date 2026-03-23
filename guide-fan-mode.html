@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fan Mode Setup Guide — Rinkside</title>
+  <meta name="description" content="Step-by-step guide for parents and fans setting up Fan Mode — switch modes, add a player, link your league via GameSheet, and browse the schedule and stats.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --red:         #C0392B;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.35);
+    }
+
+    /* ─── Page hero ─── */
+    .page-hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 72px 24px 56px;
+      text-align: center;
+    }
+
+    .page-hero .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      margin-bottom: 18px;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ─── TOC ─── */
+    .toc {
+      max-width: 720px;
+      margin: 0 auto 16px;
+      padding: 0 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.35);
+      background: var(--surface-2);
+    }
+
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ─── Guide section ─── */
+    .guide-section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .guide-section:first-of-type {
+      border-top: none;
+    }
+
+    .guide-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .guide-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .guide-header-text .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .guide-header-text h2 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      line-height: 1.15;
+    }
+
+    /* ─── Steps ─── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .step:nth-child(even) {
+      direction: rtl;
+    }
+
+    .step:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .step-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    .step-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--blue);
+      border-radius: 50%;
+    }
+
+    .step-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .step-content p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .step-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 4px;
+      padding: 12px 16px;
+      background: rgba(74, 159, 219, 0.06);
+      border: 1px solid rgba(74, 159, 219, 0.15);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .step-tip-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-phone {
+      flex-shrink: 0;
+      width: 200px;
+      border-radius: 36px;
+      overflow: hidden;
+      border: 2px solid rgba(74, 159, 219, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0,0,0,0.3);
+      background: #000;
+    }
+
+    .step-phone img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ─── Text-only step (no screenshot) ─── */
+    .step--text-only {
+      grid-template-columns: 1fr;
+      max-width: 600px;
+    }
+
+    /* ─── Stat pills ─── */
+    .stat-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: rgba(74, 159, 219, 0.08);
+      border: 1px solid rgba(74, 159, 219, 0.18);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    /* ─── Result badges (W/L/T) ─── */
+    .result-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .result-badge.win {
+      background: rgba(74, 159, 219, 0.10);
+      border: 1px solid rgba(74, 159, 219, 0.22);
+      color: var(--blue);
+    }
+
+    .result-badge.loss {
+      background: rgba(192, 57, 43, 0.12);
+      border: 1px solid rgba(192, 57, 43, 0.25);
+      color: #E05C4F;
+    }
+
+    .result-badge.tie {
+      background: rgba(214, 238, 248, 0.08);
+      border: 1px solid rgba(214, 238, 248, 0.15);
+      color: var(--text-muted);
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 72px 24px;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      margin-bottom: 14px;
+    }
+
+    .cta-section p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 34px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-brand img {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 20px;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 680px) {
+      nav { padding: 14px 20px; }
+
+      .step {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .step:nth-child(even) {
+        direction: ltr;
+      }
+
+      .step-phone {
+        width: 180px;
+        margin: 0 auto;
+      }
+
+      .guide-section { padding: 48px 20px; }
+      .page-hero { padding: 52px 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="support.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Support</a>
+      <a href="press.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Press</a>
+      <a href="wiki.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Wiki</a>
+      <a href="wiki.html" class="btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Wiki
+      </a>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <p class="section-label">For Parents &amp; Fans</p>
+    <h1>Fan Mode Setup</h1>
+    <p>Switch to Fan Mode, add your player, link their team via GameSheet, and start following their schedule and stats.</p>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <a href="#switch-modes">
+      <span class="toc-num">1</span>
+      Switch to Fan Mode
+    </a>
+    <a href="#add-player">
+      <span class="toc-num">2</span>
+      Add a Player
+    </a>
+    <a href="#find-league">
+      <span class="toc-num">3</span>
+      Find Your League
+    </a>
+    <a href="#schedule-stats">
+      <span class="toc-num">4</span>
+      Schedule &amp; Stats
+    </a>
+  </div>
+
+  <!-- Section 1: Switch to Fan Mode -->
+  <div class="guide-section" id="switch-modes">
+    <div class="guide-header">
+      <div class="guide-num">1</div>
+      <div class="guide-header-text">
+        <p class="section-label">Getting Started</p>
+        <h2>Switch to Fan Mode</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Open the Mode tab and switch to Fan Mode</h3>
+          <p>Tap the <strong>Mode</strong> tab at the bottom of the screen. You'll see a switcher with two options — <strong>Coach Mode</strong> and <strong>Fan Mode</strong>. Tap <strong>Fan Mode</strong> to switch.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">💡</span>
+            <span>You can switch back to Coach Mode at any time from the same tab. Your coach data and fan data are kept completely separate.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_01.png" alt="Mode tab showing Coach Mode and Fan Mode switcher">
+        </div>
+      </div>
+
+      <div class="step step--text-only">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Complete the Fan Mode onboarding</h3>
+          <p>A short 2-page carousel walks you through what Fan Mode offers. Swipe through both pages, then tap <strong>Get Started</strong> to continue.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">👋</span>
+            <span>Onboarding only appears the first time you switch to Fan Mode — you won't see it again on future opens.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 2: Add a Player -->
+  <div class="guide-section" id="add-player">
+    <div class="guide-header">
+      <div class="guide-num">2</div>
+      <div class="guide-header-text">
+        <p class="section-label">My Players</p>
+        <h2>Add a Player</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Tap "Add Player" from the empty state</h3>
+          <p>The <strong>My Players</strong> screen starts empty. Tap the <strong>Add Player</strong> button to open the player setup wizard.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_03.png" alt="My Players empty state with Add Player button">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 4</span>
+          <h3>Enter the player's info</h3>
+          <p>Fill in their <strong>first name</strong>, <strong>last name</strong>, and <strong>jersey number</strong>. Optionally add their position and a photo. Tap <strong>Next</strong> when you're ready.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">📸</span>
+            <span>Adding a photo helps you quickly identify your player at a glance — but it's entirely optional.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_04.png" alt="Add Player sheet showing name, jersey number, position, and photo fields">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 3: Find Your League -->
+  <div class="guide-section" id="find-league">
+    <div class="guide-header">
+      <div class="guide-num">3</div>
+      <div class="guide-header-text">
+        <p class="section-label">GameSheet Link</p>
+        <h2>Find Your League</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 5</span>
+          <h3>Search for your league by name</h3>
+          <p>Type your league's name into the search field — for example <em>"Greater Toronto Hockey League"</em>. Matching leagues appear as you type. Tap yours to continue.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🔍</span>
+            <span>Not finding your league? Try a shorter search term or check that your league uses GameSheet for game reporting.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_05.png" alt="League wizard search screen with results list">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 6</span>
+          <h3>Choose your division</h3>
+          <p>After selecting a league, you'll see a list of its divisions. Tap the one that matches your player's age group and level.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_06.png" alt="League wizard division picker">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 7</span>
+          <h3>Choose your player's team</h3>
+          <p>A list of teams in that division appears. Tap your player's team to move to the final confirmation step.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_07.png" alt="League wizard team picker">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 8</span>
+          <h3>Confirm the jersey number</h3>
+          <p>Rinkside shows the jersey numbers on the team's GameSheet roster. Confirm your player's number to complete the link. If the number was updated, you can correct it here.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🏒</span>
+            <span>Jersey numbers are used to match your player to the correct game stats — make sure it matches the number they wear this season.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_08.png" alt="League wizard jersey number confirmation screen">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 4: Schedule & Stats -->
+  <div class="guide-section" id="schedule-stats">
+    <div class="guide-header">
+      <div class="guide-num">4</div>
+      <div class="guide-header-text">
+        <p class="section-label">Following Your Player</p>
+        <h2>Schedule &amp; Stats</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 9</span>
+          <h3>Wait while game history is imported</h3>
+          <p>Rinkside fetches your player's game history from GameSheet. A progress bar shows how far along the import is — this usually takes just a few seconds.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">⏳</span>
+            <span>The app only needs to do this full import once. After that, new game results sync automatically in the background.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_09.png" alt="Import in progress with linear progress bar and percentage">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 10</span>
+          <h3>Browse the Schedule tab</h3>
+          <p>The <strong>Schedule</strong> tab shows every game played this season — each row includes the result badge, score, date, and your player's per-game performance.</p>
+          <div class="result-badges">
+            <span class="result-badge win">W — Win</span>
+            <span class="result-badge loss">L — Loss</span>
+            <span class="result-badge tie">T — Tie</span>
+          </div>
+          <div class="step-tip">
+            <span class="step-tip-icon">📅</span>
+            <span>Per-game G, A, and PIM are shown on each row so you can see exactly how your player performed in every game.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_10.png" alt="Player detail Schedule tab showing game rows with W/L/T badge, score, and per-game G/A/PIM">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 11</span>
+          <h3>View season totals on the Stats tab (skaters)</h3>
+          <p>Tap the <strong>Stats</strong> tab to see your skater's season-long totals at a glance, plus a year-over-year comparison table showing how this season stacks up against previous ones.</p>
+          <div class="stat-pills">
+            <span class="stat-pill">GP — Games Played</span>
+            <span class="stat-pill">G — Goals</span>
+            <span class="stat-pill">A — Assists</span>
+            <span class="stat-pill">PTS — Points</span>
+            <span class="stat-pill">PIM — Penalty Minutes</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_11.png" alt="Player detail Stats tab showing skater season totals card and year-over-year table">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 12</span>
+          <h3>Goalie stats show saves and averages</h3>
+          <p>For goalies, the Stats tab displays a different set of season totals focused on net performance, along with the same year-over-year comparison table.</p>
+          <div class="stat-pills">
+            <span class="stat-pill">GP — Games Played</span>
+            <span class="stat-pill">W — Wins</span>
+            <span class="stat-pill">L — Losses</span>
+            <span class="stat-pill">T — Ties</span>
+            <span class="stat-pill">GA — Goals Against</span>
+            <span class="stat-pill">GAA — Goals Against Avg</span>
+            <span class="stat-pill">SO — Shutouts</span>
+          </div>
+          <div class="step-tip">
+            <span class="step-tip-icon">🥅</span>
+            <span>GAA is automatically calculated across all games — no manual entry needed.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-122/step_12.png" alt="Player detail Stats tab showing goalie season totals card and year-over-year table">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Ready to follow your player all season?</h2>
+    <p>Rinkside is currently in beta. Request TestFlight access to get started.</p>
+    <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Request TestFlight Access</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Built for the Rink. Made for Coaches.</p>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
