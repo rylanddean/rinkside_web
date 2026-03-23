@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Running a Game — Rinkside</title>
+  <meta name="description" content="Step-by-step guide for using Rinkside live on the bench during a game — score, shots, lines, shifts, penalties, and scratches.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --red:         #C0392B;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.35);
+    }
+
+    /* ─── Page hero ─── */
+    .page-hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 72px 24px 56px;
+      text-align: center;
+    }
+
+    .page-hero .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      margin-bottom: 18px;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ─── TOC ─── */
+    .toc {
+      max-width: 720px;
+      margin: 0 auto 16px;
+      padding: 0 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.35);
+      background: var(--surface-2);
+    }
+
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ─── Guide section ─── */
+    .guide-section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .guide-section:first-of-type {
+      border-top: none;
+    }
+
+    .guide-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .guide-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .guide-header-text .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .guide-header-text h2 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      line-height: 1.15;
+    }
+
+    /* ─── Steps ─── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .step:nth-child(even) {
+      direction: rtl;
+    }
+
+    .step:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .step-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    .step-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--blue);
+      border-radius: 50%;
+    }
+
+    .step-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .step-content p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .step-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 4px;
+      padding: 12px 16px;
+      background: rgba(74, 159, 219, 0.06);
+      border: 1px solid rgba(74, 159, 219, 0.15);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .step-tip-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-phone {
+      flex-shrink: 0;
+      width: 200px;
+      border-radius: 36px;
+      overflow: hidden;
+      border: 2px solid rgba(74, 159, 219, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0,0,0,0.3);
+      background: #000;
+    }
+
+    .step-phone img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 72px 24px;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      margin-bottom: 14px;
+    }
+
+    .cta-section p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 34px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-brand img {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 20px;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 680px) {
+      nav { padding: 14px 20px; }
+
+      .step {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .step:nth-child(even) {
+        direction: ltr;
+      }
+
+      .step-phone {
+        width: 180px;
+        margin: 0 auto;
+      }
+
+      .guide-section { padding: 48px 20px; }
+      .page-hero { padding: 52px 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="support.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Support</a>
+      <a href="press.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Press</a>
+      <a href="wiki.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Wiki</a>
+      <a href="wiki.html" class="btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Wiki
+      </a>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <p class="section-label">Gameday Mode</p>
+    <h1>Running a Game</h1>
+    <p>Everything you need to coach from the bench — score, shots, lines, shifts, penalties, and scratches, all in one place.</p>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <a href="#score-tracker">
+      <span class="toc-num">1</span>
+      Score Tracker
+    </a>
+    <a href="#shot-tracker">
+      <span class="toc-num">2</span>
+      Shot Tracker
+    </a>
+    <a href="#game-lineup">
+      <span class="toc-num">3</span>
+      Game Lineup
+    </a>
+    <a href="#shift-timer">
+      <span class="toc-num">4</span>
+      Shift Timer
+    </a>
+    <a href="#penalty-timer">
+      <span class="toc-num">5</span>
+      Penalty Timer
+    </a>
+    <a href="#gameday-roster">
+      <span class="toc-num">6</span>
+      Gameday Roster
+    </a>
+  </div>
+
+  <!-- Section 1: Score Tracker -->
+  <div class="guide-section" id="score-tracker">
+    <div class="guide-header">
+      <div class="guide-num">1</div>
+      <div class="guide-header-text">
+        <p class="section-label">Live Scoring</p>
+        <h2>Score Tracker</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Open Gameday Mode from the More tab</h3>
+          <p>Tap <strong>More</strong> in the bottom-right of the tab bar, then tap <strong>Gameday</strong> from the list. The Score Tracker opens and you're ready to go — your team is on the left, opponent on the right.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-119/step_01.png" alt="More tab showing Gameday option">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Tap + to update the score after each goal</h3>
+          <p>Hit the <strong>+</strong> button under your team or the opponent whenever a goal is scored. The score updates instantly and is saved locally — no network required.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-119/step_01.png" alt="Score tracker showing score and period controls">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Advance the period using the period control</h3>
+          <p>Tap the period indicator between the scores to move from 1st → 2nd → 3rd → OT. Rinkside keeps the current period in sync across Score Tracker, Shot Tracker, and the Shift Timer.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-119/step_01.png" alt="Period control on score tracker">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 2: Shot Tracker -->
+  <div class="guide-section" id="shot-tracker">
+    <div class="guide-header">
+      <div class="guide-num">2</div>
+      <div class="guide-header-text">
+        <p class="section-label">Shots &amp; Saves</p>
+        <h2>Shot Tracker</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Switch to the Shot Tracker panel</h3>
+          <p>Scroll down on the Gameday screen to see the Shot Tracker. Shot counts are tracked for both teams.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Shot tracker showing shot counts">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Tap + to count every shot on net</h3>
+          <p>Tap the <strong>+</strong> button for your team or the opponent each time a shot hits the goalie. Rinkside tallies the total for the full game.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Shot count being incremented">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Saves are calculated from shots and goals</h3>
+          <p>Rinkside calculates your goalie's saves automatically — shots faced minus goals allowed. The save count updates in real time as you log shots and goals during the game.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Save percentage calculated from shot data">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 3: Game Lineup -->
+  <div class="guide-section" id="game-lineup">
+    <div class="guide-header">
+      <div class="guide-num">3</div>
+      <div class="guide-header-text">
+        <p class="section-label">Lines &amp; Units</p>
+        <h2>Game Lineup</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Set your starting goalie before puck drop</h3>
+          <p>In the Game Lineup panel, tap <strong>Starting Goalie</strong> and select who's in net. The starting goalie is highlighted throughout Gameday Mode and their stats are tracked from the first shot.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Gameday mode showing game lineup">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Review your even-strength lines</h3>
+          <p>Your pre-built forward lines and defensive pairs appear here exactly as you set them up. Tap any slot to make a quick substitution during the game without leaving Gameday Mode.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">✏️</span>
+            <span>Changes made during a game are saved to the gameday snapshot — your pre-game lineup is preserved untouched.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Even-strength lines in game lineup">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Switch to your PP or PK unit when needed</h3>
+          <p>Tap <strong>Power Play</strong> or <strong>Penalty Kill</strong> to pull up your special teams units. Each unit shows the five players on ice — tap any name to swap in a replacement on the fly.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">⚡</span>
+            <span>Special teams units are available with the Full Unlock. The even-strength lineup is always available on the free tier.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Special teams units in game lineup">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 4: Shift Timer -->
+  <div class="guide-section" id="shift-timer">
+    <div class="guide-header">
+      <div class="guide-num">4</div>
+      <div class="guide-header-text">
+        <p class="section-label">Shift Management</p>
+        <h2>Shift Timer</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Set your target shift length before the game</h3>
+          <p>Tap the dropdown in the <strong>top-right corner</strong> of the Gameday view to set your target shift length (e.g. 45 seconds). Rinkside will alert you when shifts are running long.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">⏱️</span>
+            <span>Most minor hockey coaches run 45–60 second shifts for younger players, 60–75 seconds for competitive age groups. Adjust to match your system.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Shift timer with shift length settings">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Tap a line when it hits the ice</h3>
+          <p>As your line jumps over the boards, tap the line to start its timer. The timer counts up and turns amber when you're approaching your target shift length.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Shift timer running with start/stop controls">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Tap the line again to stop the timer</h3>
+          <p>When the line changes, tap the line again to stop its timer. The shift duration is logged and the shift counter increments. The timer resets automatically, ready for the next change.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">📈</span>
+            <span>The shift counter tracks how many times each line has been out. Check it at the end of periods to make sure you're distributing ice time evenly.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Shift counter showing completed shifts">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 5: Penalty Timer -->
+  <div class="guide-section" id="penalty-timer">
+    <div class="guide-header">
+      <div class="guide-num">5</div>
+      <div class="guide-header-text">
+        <p class="section-label">Penalties</p>
+        <h2>Penalty Timer</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Open the Penalty Timer when a penalty is called</h3>
+          <p>Tap the <strong>Penalty</strong> button in Gameday Mode to open the Penalty Timer. The timer is set to 2 minutes.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Penalty timer UI">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Tap Start and the countdown begins immediately</h3>
+          <p>Tap <strong>Start</strong> to kick off the 2-minute countdown. The penalty timer runs on screen so you always know exactly how long is left in the box — no mental math required.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🚨</span>
+            <span>You can track multiple penalties at once — add a new timer for each player in the box.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Penalty timer counting down">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Timer stops when it hits zero</h3>
+          <p>When the penalty expires, the timer stops at zero and the player is back on the ice.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/IMG_0304.PNG" alt="Penalty timer expired state">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 6: Gameday Roster -->
+  <div class="guide-section" id="gameday-roster">
+    <div class="guide-header">
+      <div class="guide-num">6</div>
+      <div class="guide-header-text">
+        <p class="section-label">Scratches &amp; Availability</p>
+        <h2>Gameday Roster</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Open the Gameday Roster to mark scratches</h3>
+          <p>Tap <strong>Gameday Roster</strong> in the Gameday Mode menu. Your full team roster appears with every player active by default. Swipe left on a player and tap <strong>Scratch</strong> to mark them out for today's game.</p>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-119/step_06.png" alt="Gameday roster with player list">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Scratched players are removed from game lines</h3>
+          <p>Once scratched, the player is immediately removed from all game line slots — even-strength, power play, and penalty kill. Open slots are highlighted so you can fill them quickly before puck drop.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🔄</span>
+            <span>Scratches only affect today's game. Your full lineup is restored automatically for the next game — no manual cleanup needed.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-119/step_06.png" alt="Scratched players removed from game lines">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Reinstate a player if they become available</h3>
+          <p>If a scratched player is cleared to play, swipe left on their name and tap <strong>Activate</strong>. They're immediately available to be slotted back into your lines without any data loss.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">✅</span>
+            <span>Late scratch? You can update the Gameday Roster right up until puck drop — or even mid-game if a player gets injured and needs to come out.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-119/step_06.png" alt="Player being reinstated from scratch">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Ready to coach your next game?</h2>
+    <p>Rinkside is currently in beta. Request TestFlight access and take Gameday Mode to the bench.</p>
+    <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Request TestFlight Access</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Built for the Rink. Made for Coaches.</p>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
