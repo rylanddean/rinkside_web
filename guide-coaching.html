@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apple Intelligence Coaching Guide — Rinkside</title>
+  <meta name="description" content="Step-by-step guide for Rinkside's Apple Intelligence coaching insights — personalised, on-device coaching cues generated from your player data.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --red:         #C0392B;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.35);
+    }
+
+    /* ─── Page hero ─── */
+    .page-hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 72px 24px 56px;
+      text-align: center;
+    }
+
+    .page-hero .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      margin-bottom: 18px;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ─── Prerequisites banner ─── */
+    .prereq-banner {
+      max-width: 720px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .prereq-inner {
+      background: rgba(74, 159, 219, 0.06);
+      border: 1px solid rgba(74, 159, 219, 0.20);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .prereq-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 2px;
+    }
+
+    .prereq-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .prereq-list li {
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .prereq-list li::before {
+      content: "→";
+      color: var(--blue);
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .prereq-list strong {
+      color: var(--text);
+    }
+
+    /* ─── TOC ─── */
+    .toc {
+      max-width: 720px;
+      margin: 0 auto 16px;
+      padding: 0 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.35);
+      background: var(--surface-2);
+    }
+
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ─── Guide section ─── */
+    .guide-section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .guide-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .guide-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .guide-header-text .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .guide-header-text h2 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      line-height: 1.15;
+    }
+
+    /* ─── Steps ─── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .step:nth-child(even) {
+      direction: rtl;
+    }
+
+    .step:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .step-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    .step-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--blue);
+      border-radius: 50%;
+    }
+
+    .step-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .step-content p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .step-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 4px;
+      padding: 12px 16px;
+      background: rgba(74, 159, 219, 0.06);
+      border: 1px solid rgba(74, 159, 219, 0.15);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .step-tip--warning {
+      background: rgba(255, 179, 71, 0.06);
+      border-color: rgba(255, 179, 71, 0.20);
+    }
+
+    .step-tip-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-phone {
+      flex-shrink: 0;
+      width: 200px;
+      border-radius: 36px;
+      overflow: hidden;
+      border: 2px solid rgba(74, 159, 219, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0,0,0,0.3);
+      background: #000;
+    }
+
+    .step-phone img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 72px 24px;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      margin-bottom: 14px;
+    }
+
+    .cta-section p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 34px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-brand img {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 20px;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 680px) {
+      nav { padding: 14px 20px; }
+
+      .step {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .step:nth-child(even) {
+        direction: ltr;
+      }
+
+      .step-phone {
+        width: 180px;
+        margin: 0 auto;
+      }
+
+      .guide-section { padding: 48px 20px; }
+      .page-hero { padding: 52px 20px 40px; }
+      .prereq-banner { margin-bottom: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="support.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Support</a>
+      <a href="press.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Press</a>
+      <a href="wiki.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Wiki</a>
+      <a href="wiki.html" class="btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Wiki
+      </a>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <p class="section-label">Feature Guide</p>
+    <h1>Apple Intelligence Coaching</h1>
+    <p>Personalised, on-device coaching insights — generated from your player's stats, notes, and report card data.</p>
+  </div>
+
+  <!-- Prerequisites -->
+  <div class="prereq-banner">
+    <div class="prereq-inner">
+      <p class="prereq-title">Before You Begin</p>
+      <ul class="prereq-list">
+        <li><strong>Full Unlock required</strong> — Coaching insights are a paid feature. Upgrade to Full Unlock to access them.</li>
+        <li><strong>Apple Intelligence device required</strong> — iPhone 15 Pro or later running iOS 18.1 or later, with Apple Intelligence enabled in Settings → Apple Intelligence &amp; Siri.</li>
+        <li><strong>All generation is on-device</strong> — Insights are generated locally by Apple Intelligence. No internet connection is needed and your data never leaves your device.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <a href="#coaching-tab">
+      <span class="toc-num">1</span>
+      Where Insights Appear
+    </a>
+    <a href="#read-and-act">
+      <span class="toc-num">2</span>
+      Read &amp; Act on a Suggestion
+    </a>
+    <a href="#improve-over-time">
+      <span class="toc-num">3</span>
+      How Insights Improve
+    </a>
+  </div>
+
+  <!-- Section 1: Where coaching insights appear -->
+  <div class="guide-section" id="coaching-tab">
+    <div class="guide-header">
+      <div class="guide-num">1</div>
+      <div class="guide-header-text">
+        <p class="section-label">Getting There</p>
+        <h2>Where coaching insights appear</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Navigate to a player's profile and tap the Coaching tab</h3>
+          <p>Open any player's profile, then tap the <strong>Coaching</strong> tab. The insight panel loads three sections generated on-device by Apple Intelligence: <strong>Season Summary</strong>, <strong>Top Strength</strong>, and <strong>Development Focus</strong>.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🧠</span>
+            <span>Each insight is generated from that player's stats, coaching notes, enrichment data, and report card — so the more data you add, the sharper the insights become.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-124/step_01.png" alt="Player profile with the Coaching tab active, showing the Season Summary, Top Strength, and Development Focus insight panels">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 2: How to read and act on a suggestion -->
+  <div class="guide-section" id="read-and-act">
+    <div class="guide-header">
+      <div class="guide-num">2</div>
+      <div class="guide-header-text">
+        <p class="section-label">Using Insights</p>
+        <h2>Read and act on a suggestion</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Rate each insight with the thumbs up or thumbs down icon</h3>
+          <p>Each panel gives a focused, actionable coaching cue. Tap the <strong>thumbs up</strong> icon if the insight resonates, or <strong>thumbs down</strong> if it misses the mark. A thumbs down optionally prompts you for a correction reason — this feedback is woven into the next regeneration.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">👍</span>
+            <span>Your ratings shape future insights. Thumbs up reinforces the tone and focus; thumbs down with a correction reason adjusts specificity and direction in the next pass.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-124/step_02.png" alt="Coaching insight panel with the thumbs up and thumbs down feedback buttons visible">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 3: How insights improve over time -->
+  <div class="guide-section" id="improve-over-time">
+    <div class="guide-header">
+      <div class="guide-num">3</div>
+      <div class="guide-header-text">
+        <p class="section-label">Getting Better Results</p>
+        <h2>How insights improve over time</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3a</span>
+          <h3>Add more player data via Enrichment Chat</h3>
+          <p>Insights regenerate automatically whenever the underlying data changes. The fastest way to improve them is to fill in the <strong>Enrichment Chat</strong> — a set of position-specific questions about the player. More answers mean richer context for Apple Intelligence to draw from.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">💬</span>
+            <span>You can also improve insights through <strong>Report Card</strong> skill ratings and manual coaching notes on the player's profile — all three sources feed directly into the generation prompt.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-124/step_03a.png" alt="Enrichment Chat in progress, showing position-specific questions being answered to build richer player context">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3b</span>
+          <h3>Give feedback to steer the next generation</h3>
+          <p>Your thumbs up and thumbs down ratings — along with any correction reasons you provide — are included in the next generation prompt. Over time this adjusts the tone, focus, and specificity of insights to match how you actually coach.</p>
+          <div class="step-tip step-tip--warning">
+            <span class="step-tip-icon">⚠️</span>
+            <span>There is no coaching history or trends view in the app. Improvement is driven by data enrichment and feedback loops — not a history screen.</span>
+          </div>
+        </div>
+        <div class="step-phone">
+          <img src="screenshots/KAN-124/step_03b.png" alt="Report Card editor showing skill ratings being updated, which feeds into the next coaching insight generation">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Coach smarter, all season long.</h2>
+    <p>Rinkside is currently in beta. Request TestFlight access to try Apple Intelligence coaching and every other feature.</p>
+    <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Request TestFlight Access</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Built for the Rink. Made for Coaches.</p>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
