@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rinkside v1.2 — The Practice Planner Is Here</title>
+  <meta name="description" content="Rinkside v1.2 introduces the Practice Planner — build timed practice plans, browse 700+ drills, run live sessions with a countdown timer, and generate full plans with Apple Intelligence. Available on TestFlight now.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --red:         #C0392B;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 9px 20px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--text); }
+    .nav-link.active { color: var(--text); }
+
+    /* ─── Article Hero ─── */
+    .article-hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 48px;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .article-date {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .article-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: rgba(74, 159, 219, 0.12);
+      border: 1px solid rgba(74, 159, 219, 0.2);
+      border-radius: 100px;
+      padding: 3px 10px;
+    }
+
+    .article-hero h1 {
+      font-size: clamp(28px, 5vw, 46px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+    }
+
+    .article-hero .lede {
+      font-size: 19px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      border-left: 3px solid var(--blue);
+      padding-left: 20px;
+      max-width: 680px;
+    }
+
+    /* ─── Divider ─── */
+    .article-divider {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    /* ─── Article Body ─── */
+    .article-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+
+    .article-body p {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .article-body p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .article-body h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin: 56px 0 16px;
+      padding-top: 8px;
+    }
+
+    .article-body h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 36px 0 12px;
+    }
+
+    /* ─── Quote ─── */
+    .founder-quote {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--blue);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 28px 32px;
+      margin: 40px 0;
+    }
+
+    .founder-quote blockquote {
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .founder-quote cite {
+      font-size: 13px;
+      font-style: normal;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ─── Feature Cards ─── */
+    .feature-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin: 28px 0;
+      transition: border-color 0.2s;
+    }
+
+    .feature-section:hover {
+      border-color: rgba(74, 159, 219, 0.25);
+    }
+
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .feature-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .feature-header h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .feature-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f0c040;
+      background: rgba(240, 192, 64, 0.1);
+      border: 1px solid rgba(240, 192, 64, 0.2);
+      border-radius: 100px;
+      padding: 2px 8px;
+      margin-left: 4px;
+    }
+
+    .feature-section p {
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+
+    /* ─── Drill Steps List ─── */
+    .drill-steps {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drill-steps li {
+      font-size: 15px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .drill-steps li::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    /* ─── Pricing Block ─── */
+    .pricing-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .pricing-tier {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+    }
+
+    .pricing-tier.featured {
+      border-color: rgba(74, 159, 219, 0.3);
+      background: var(--surface-2);
+    }
+
+    .pricing-tier-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .pricing-tier.featured .pricing-tier-label {
+      color: var(--blue);
+    }
+
+    .pricing-tier h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 4px;
+    }
+
+    .pricing-price {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .pricing-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .pricing-tier ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .pricing-tier ul li {
+      font-size: 14px;
+      color: var(--text-muted);
+      padding: 5px 0;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .pricing-tier ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* ─── CTA ─── */
+    .article-cta {
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 36px;
+      margin-top: 56px;
+    }
+
+    .article-cta h2 {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin: 0 0 12px;
+    }
+
+    .article-cta p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .article-cta .btn-primary {
+      font-size: 15px;
+      padding: 12px 28px;
+    }
+
+    /* ─── Back Link ─── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      margin-bottom: 32px;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .footer-brand img {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+    }
+
+    .footer-brand span {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(106, 141, 170, 0.6);
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .pricing-block { grid-template-columns: 1fr; }
+      .founder-quote { padding: 20px 20px; }
+      .founder-quote blockquote { font-size: 16px; }
+      .article-hero .lede { font-size: 17px; }
+      .feature-section { padding: 22px 20px; }
+      .article-cta { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="getting-started.html" class="nav-link">Getting Started</a>
+      <a href="support.html" class="nav-link">Support</a>
+      <a href="press.html" class="nav-link active">Press</a>
+      <a href="wiki.html" class="nav-link">Wiki</a>
+      <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Join the Beta</a>
+    </div>
+  </nav>
+
+  <!-- Article Hero -->
+  <div class="article-hero">
+    <a href="press.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Press Room
+    </a>
+    <div class="article-meta">
+      <span class="article-date">March 25, 2026</span>
+      <span class="article-badge">v1.2 &mdash; Practice Planner</span>
+    </div>
+    <h1>Rinkside v1.2 — The Practice Planner Is Here</h1>
+    <p class="lede">Building a practice used to mean a whiteboard, a notebook, or a cobbled-together Google Doc the night before. Version 1.2 replaces all of that with a full Practice Planner — 700+ drills from Hockey Canada, a step-by-step run mode with a countdown timer, Live Activity on the lock screen, and Apple Intelligence that can draft your entire practice for you.</p>
+  </div>
+
+  <hr class="article-divider">
+
+  <!-- Article Body -->
+  <div class="article-body">
+
+    <p>Every coach has been there. It's 10 PM, you're on the ice in eight hours, and you're staring at a blank page trying to remember what you ran last week, what age group that drill was designed for, and whether it'll fit in the time you have. The preparation is real work — and until now, Rinkside hadn't touched it.</p>
+
+    <p>Version 1.2 is the biggest release since the beta launch. It introduces the <strong>Practice Planner</strong> — a complete end-to-end system for building, running, and improving practices. Available now on TestFlight, this update brings a library of over 700 drills, a live run mode with a countdown timer, Apple Intelligence practice generation, and a Live Activity that keeps your session on track even when your phone is in your pocket.</p>
+
+    <div class="founder-quote">
+      <blockquote>"I built the roster and lines tools first because those were the problems I ran into most often on game day. But the problem that started before any of that — the night before, at the kitchen table — was figuring out what to actually run at practice. That's what v1.2 is about. Planning a practice should feel as easy as building a line."</blockquote>
+      <cite>— Ryland Dean, Creator of Rinkside</cite>
+    </div>
+
+    <p>The Practice Planner lives in its own tab in Rinkside. Every tool in it was built to connect — the drill library feeds the plan builder, the plan builder feeds the run mode, and the run mode feeds back into the drills through post-practice ratings. The whole system is designed around the reality of how coaches actually prepare: not at a desk, but quickly, often late, and always with the ice already booked.</p>
+
+    <h2>Building a Practice Plan</h2>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">📋</span>
+        <h3>Slot Editor &amp; Plan Builder</h3>
+      </div>
+      <p>Building a practice starts with slots — timed blocks that represent each segment of your session. Add a warm-up, a skating drill, a shooting drill, a small-sided game, a cool-down. Assign a duration to each slot, attach a drill from the library or leave it as a free-form segment, and watch the total time add up at the top. The plan shows you your time breakdown at a glance: total minutes, total slots, and how many drills you've attached. Set the age group for your team and Rinkside pre-populates the Gamesheet category so everything is organized correctly from the start. Need to tweak it later? Hit Edit from the plan detail view and adjust anything — duration, drill, order — without starting over.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">📚</span>
+        <h3>Drill Hub — 700+ Drills from Hockey Canada</h3>
+      </div>
+      <p>Every drill in Rinkside comes from the Hockey Canada Drill Hub — a library of over 700 drills organized by category, age group, and skill focus. Each drill includes a full rink diagram showing player positioning and movement, step-by-step coaching cues, a category tag (Skating, Shooting, Defence, and more), and a photo from the source. When you're building a plan, the Drill Picker lets you browse and search the full library to find exactly what fits your slot. Not sure if a drill is right for the age group? Long-press any drill in the picker for a full preview — diagram, steps, and all — before you commit.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🗓️</span>
+        <h3>Plans List &amp; Detail View</h3>
+      </div>
+      <p>All your saved plans live in the Practice Planner tab — a scrollable list showing each plan's name, team, total time, and slot count at a glance. Tap any plan to open its detail view: the full slot breakdown, attached drills, timing, and a one-tap button to start the run. Your plans persist between sessions, so the work you put in on Sunday night is ready to go Monday morning without rebuilding anything.</p>
+    </div>
+
+    <h2>Running a Practice</h2>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">▶️</span>
+        <h3>Practice Run Mode — Step-by-Step with Countdown</h3>
+      </div>
+      <p>Tap Run on any plan and Rinkside takes over as your on-ice timekeeper. Run Mode walks through your plan one slot at a time, showing the current drill name, its step-by-step coaching cues, and a live countdown timer counting down to zero. When time's up, Rinkside fires an alarm and an intense haptic pulse so you feel it through your gloves — then you tap to advance to the next drill. No more glancing at a clock, no more losing track of where you are in the plan. A Stop Alarm button appears the moment the alarm fires so you can silence it cleanly before moving on.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🏝️</span>
+        <h3>Live Activity &amp; Dynamic Island</h3>
+      </div>
+      <p>When a practice run is active, Rinkside puts a Live Activity on your lock screen showing the current drill name and the time remaining — so you can check the clock without unlocking your phone or taking your eyes off the ice for more than a second. On iPhone 14 Pro and later, the active timer also appears in the Dynamic Island, shrinking down to a persistent pill at the top of the screen so the information is always a glance away, even when you're in a different app. The session stays live until you end it, and the lock screen widget updates in real time as each drill counts down.</p>
+    </div>
+
+    <h2>AI-Powered Practice Planning <span class="feature-tag">Full Unlock</span></h2>
+
+    <p>Two AI features ship in v1.2, both powered by Apple Intelligence and both available to Full Unlock subscribers. They're designed to do the heavy lifting on nights when you know what you want to work on but don't want to build it from scratch.</p>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">✨</span>
+        <h3>Focus Suggestion Banner</h3>
+      </div>
+      <p>When you open the Practice Planner, an AI-powered banner at the top of the screen surfaces a suggested focus area for your next session — based on your team's age group, recent practice history, and gaps in what you've been covering. It's not a prescription; it's a nudge. Something to react to when you sit down to plan. Dismiss it, take it, or use it as a starting point for the AI generation path below.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🤖</span>
+        <h3>AI Practice Generation</h3>
+      </div>
+      <p>The most powerful addition in v1.2: tell Rinkside what kind of practice you want, and Apple Intelligence builds the whole plan for you. Pick a focus area, set a duration, and the AI assembles a complete practice plan from the drill library — selecting drills that match your team's age group, fitting them to the time available, building the slots, and attaching the drills. It avoids duplicates, names the plan automatically if you leave the title blank, and delivers something ready to run in seconds. You can edit the generated plan just like any other, so the AI output is always a starting point you control — not a black box you're stuck with.</p>
+    </div>
+
+    <h2>During &amp; After Practice</h2>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🎬</span>
+        <h3>Drill Images, Diagrams &amp; Video</h3>
+      </div>
+      <p>In the practice plan detail view, each attached drill now shows its rink diagram image inline. Tap a diagram to open it full-screen — the drill steps appear alongside the image so you can review the full play before stepping on the ice. Drill videos from Hockey Canada are also playable directly inside the detail view for drills that have them. Everything you need to brief your staff or remind yourself of a drill is in one place, without leaving the app.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">⭐</span>
+        <h3>Post-Practice Drill Ratings</h3>
+      </div>
+      <p>After a session wraps, Rinkside prompts you to rate the drills you ran. A quick thumbs up or down on each drill takes ten seconds and builds a personal record of what actually worked on the ice with your group. Over a season, those ratings become useful — a signal that certain drills land well with your age group and others don't, without having to rely on memory. It's the kind of feedback loop that makes the next plan better than the last.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🎨</span>
+        <h3>Whiteboard — Freehand Rink Diagrams</h3>
+      </div>
+      <p>Sometimes the best way to explain a drill is to draw it. The Whiteboard gives you a clean rink diagram and a freehand drawing tool — sketch out positioning, movement, or plays with your finger, right on the ice surface. It's built for on-ice 1-on-1 coaching moments: when a player doesn't quite have the picture in their head, you pull up the whiteboard and draw it for them. No prep required. Just open it and draw.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">📤</span>
+        <h3>Practice Plan Export &amp; Share Sheet <span class="feature-tag">Full Unlock</span></h3>
+      </div>
+      <p>Export any practice plan as a beautifully formatted image — a clean, branded card showing the plan name, team, age group, and every drill slot with its timing. Share it with an assistant coach before the session, post it to your team group chat, or keep it as a record of what you ran. The export card is generated on device and shared through the standard iOS share sheet, so it goes wherever your content already goes.</p>
+    </div>
+
+    <h2>Availability &amp; Pricing</h2>
+
+    <p>Rinkside v1.2 is available now on TestFlight. The core Practice Planner — plan building, the full drill library, run mode, and the Live Activity timer — is available to all users. AI practice generation, AI focus suggestions, and practice plan export require Full Unlock.</p>
+
+    <div class="pricing-block">
+      <div class="pricing-tier">
+        <div class="pricing-tier-label">Free</div>
+        <h3>Free</h3>
+        <div class="pricing-price">$0</div>
+        <p class="pricing-sub">No subscription. No catch.</p>
+        <ul>
+          <li>1 team, up to 25 players</li>
+          <li>Full roster management</li>
+          <li>Even strength line builder</li>
+          <li>Schedule &amp; standings</li>
+          <li>In-game mode</li>
+          <li>On-device rulebook</li>
+          <li>Fan Mode — 1 player</li>
+          <li>Practice Planner &amp; drill library</li>
+          <li>Run Mode with countdown timer</li>
+          <li>Live Activity &amp; Dynamic Island timer</li>
+          <li>Post-practice drill ratings</li>
+          <li>Whiteboard</li>
+        </ul>
+      </div>
+      <div class="pricing-tier featured">
+        <div class="pricing-tier-label">Full Unlock</div>
+        <h3>Unlock Everything</h3>
+        <div class="pricing-price">$2.99</div>
+        <p class="pricing-sub">Pay once, own it forever.</p>
+        <ul>
+          <li>Everything in Free</li>
+          <li>Unlimited teams &amp; players</li>
+          <li>Fan Mode — unlimited players</li>
+          <li>Player profiles &amp; report cards</li>
+          <li>Apple Intelligence coaching</li>
+          <li>AI Lines Builder</li>
+          <li>Power play &amp; penalty kill builders</li>
+          <li>Lineup image export</li>
+          <li>Hockey card export</li>
+          <li>AI practice generation</li>
+          <li>AI focus suggestions</li>
+          <li>Practice plan image export</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="article-cta">
+      <h2>Ready to plan your best practice yet?</h2>
+      <p>Rinkside v1.2 with the full Practice Planner is available now on TestFlight. Browse the drills, build the plan, and run the session — all from your phone.</p>
+      <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Request TestFlight Access</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Built for the Rink. Made for Coaches.</p>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p><a href="privacy-policy.html">Privacy Policy</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
