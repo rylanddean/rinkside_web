@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Planner Guide — Rinkside</title>
+  <meta name="description" content="Step-by-step guide for Rinkside's Practice Planner — build timed practice plans, browse 700+ drills, run live sessions with a countdown timer, and share plans with your staff.">
+  <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0D1A;
+      --surface:     #1A1A2E;
+      --surface-2:   #1D2340;
+      --blue:        #4A9FDB;
+      --blue-dark:   #1A6BAA;
+      --red:         #C0392B;
+      --text:        #D6EEF8;
+      --text-muted:  #6A8DAA;
+      --border:      rgba(74, 159, 219, 0.12);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 13, 26, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+    }
+
+    .nav-brand span {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.35);
+    }
+
+    /* ─── Page hero ─── */
+    .page-hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 72px 24px 56px;
+      text-align: center;
+    }
+
+    .page-hero .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      margin-bottom: 18px;
+      background: linear-gradient(140deg, #D6EEF8 30%, #4A9FDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ─── Prerequisites banner ─── */
+    .prereq-banner {
+      max-width: 720px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .prereq-inner {
+      background: rgba(74, 159, 219, 0.06);
+      border: 1px solid rgba(74, 159, 219, 0.20);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .prereq-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 2px;
+    }
+
+    .prereq-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .prereq-list li {
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .prereq-list li::before {
+      content: "→";
+      color: var(--blue);
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .prereq-list strong {
+      color: var(--text);
+    }
+
+    /* ─── TOC ─── */
+    .toc {
+      max-width: 720px;
+      margin: 0 auto 16px;
+      padding: 0 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      border-color: rgba(74, 159, 219, 0.35);
+      background: var(--surface-2);
+    }
+
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ─── Guide section ─── */
+    .guide-section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .guide-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .guide-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .guide-header-text .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .guide-header-text h2 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      line-height: 1.15;
+    }
+
+    /* ─── Steps ─── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .step:nth-child(even) {
+      direction: rtl;
+    }
+
+    .step:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .step--text-only {
+      grid-template-columns: 1fr;
+    }
+
+    .step--text-only:nth-child(even) {
+      direction: ltr;
+    }
+
+    .step-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    .step-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--blue);
+      border-radius: 50%;
+    }
+
+    .step-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .step-content p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .step-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 4px;
+      padding: 12px 16px;
+      background: rgba(74, 159, 219, 0.06);
+      border: 1px solid rgba(74, 159, 219, 0.15);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .step-tip--warning {
+      background: rgba(255, 179, 71, 0.06);
+      border-color: rgba(255, 179, 71, 0.20);
+    }
+
+    .step-tip-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-phone {
+      flex-shrink: 0;
+      width: 200px;
+      border-radius: 36px;
+      overflow: hidden;
+      border: 2px solid rgba(74, 159, 219, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0,0,0,0.3);
+      background: #000;
+    }
+
+    .step-phone img {
+      width: 100%;
+      display: block;
+    }
+
+    /* Screenshot placeholder */
+    .screenshot-placeholder {
+      flex-shrink: 0;
+      width: 200px;
+      height: 380px;
+      border-radius: 36px;
+      border: 2px dashed rgba(74, 159, 219, 0.35);
+      background: rgba(74, 159, 219, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 72px 24px;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      margin-bottom: 14px;
+    }
+
+    .cta-section p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 34px;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .footer-brand img {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      margin-top: 20px;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 680px) {
+      nav { padding: 14px 20px; }
+
+      .step {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .step:nth-child(even) {
+        direction: ltr;
+      }
+
+      .step-phone,
+      .screenshot-placeholder {
+        width: 180px;
+        margin: 0 auto;
+      }
+
+      .guide-section { padding: 48px 20px; }
+      .page-hero { padding: 52px 20px 40px; }
+      .prereq-banner { margin-bottom: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="support.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Support</a>
+      <a href="press.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Press</a>
+      <a href="wiki.html" style="font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Wiki</a>
+      <a href="wiki.html" class="btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.5 2.5L4 7L8.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Wiki
+      </a>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <p class="section-label">Feature Guide</p>
+    <h1>Practice Planner</h1>
+    <p>Build timed practice plans, browse 700+ Hockey Canada drills, run live sessions with a countdown timer, and share plans with your staff.</p>
+  </div>
+
+  <!-- Prerequisites -->
+  <div class="prereq-banner">
+    <div class="prereq-inner">
+      <p class="prereq-title">Before You Begin</p>
+      <ul class="prereq-list">
+        <li><strong>Full Unlock required</strong> — Building plans, browsing the Drill Hub, running live sessions, and sharing plans are all Full Unlock features. Tap any locked card to see upgrade options.</li>
+        <li><strong>AI plan generation requires Apple Intelligence</strong> — Generating a plan with AI needs an iPhone 15 Pro or later running iOS 18.1 or later, with Apple Intelligence enabled in Settings → Apple Intelligence &amp; Siri. Building plans manually works on any supported device.</li>
+        <li><strong>Drill images and videos load from the internet</strong> — Rink Rat includes 700+ drills offline, but rink diagrams and video clips require a connection to display.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <a href="#planner-hub">
+      <span class="toc-num">1</span>
+      The Practice Planner Hub
+    </a>
+    <a href="#build-plan">
+      <span class="toc-num">2</span>
+      Building a Practice Plan
+    </a>
+    <a href="#drill-hub">
+      <span class="toc-num">3</span>
+      Browsing the Drill Hub
+    </a>
+    <a href="#saved-plans">
+      <span class="toc-num">4</span>
+      Viewing &amp; Editing Saved Plans
+    </a>
+    <a href="#run-practice">
+      <span class="toc-num">5</span>
+      Running a Live Practice
+    </a>
+    <a href="#share-plan">
+      <span class="toc-num">6</span>
+      Sharing Your Plan
+    </a>
+    <a href="#whiteboard">
+      <span class="toc-num">7</span>
+      Using the Whiteboard
+    </a>
+  </div>
+
+  <!-- ─── Section 1: The Practice Planner Hub ─── -->
+  <div class="guide-section" id="planner-hub">
+    <div class="guide-header">
+      <div class="guide-num">1</div>
+      <div class="guide-header-text">
+        <p class="section-label">Getting There</p>
+        <h2>The Practice Planner hub</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Tap the Practice tab at the bottom of the screen</h3>
+          <p>The Practice Planner is its own tab in Rink Rat. Tap it to open the hub, which shows four action cards: <strong>Build Practice Plan</strong>, <strong>Drill Hub</strong>, <strong>Saved Plans</strong>, and <strong>Whiteboard</strong>.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🏒</span>
+            <span>The <strong>Saved Plans</strong> card shows a badge with the number of plans you've already saved for your current team — a handy reminder of what you have ready to go.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Practice Planner hub showing all four action cards (Build Practice Plan, Drill Hub, Saved Plans, Whiteboard) -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Practice Planner hub with all four action cards visible</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Check your Practice Focus suggestion (Full Unlock)</h3>
+          <p>If you have Full Unlock and Apple Intelligence is available, a <strong>Practice Focus</strong> banner may appear at the top of the hub. This is an AI-generated suggestion based on your players' report card ratings — it highlights the skills your team is struggling with most and recommends a practice focus for your next session.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🧠</span>
+            <span>The Practice Focus banner shows separate suggestions for skaters and goalies when enough report card data exists. The more skill ratings you fill in for your players, the more targeted the suggestion becomes.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Practice Planner hub with the Practice Focus AI banner visible at the top, showing a coaching suggestion -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Practice Planner hub with the Practice Focus AI banner visible</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Section 2: Building a Practice Plan ─── -->
+  <div class="guide-section" id="build-plan">
+    <div class="guide-header">
+      <div class="guide-num">2</div>
+      <div class="guide-header-text">
+        <p class="section-label">Creating Plans</p>
+        <h2>Building a practice plan</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Tap "Build Practice Plan" and choose your method</h3>
+          <p>From the hub, tap <strong>Build Practice Plan</strong>. You'll be asked to choose how you want to create the plan: <strong>Generate with AI</strong> (uses Apple Intelligence to build a structured plan from a prompt) or <strong>Build Manually</strong> (create slots from scratch at your own pace).</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">✨</span>
+            <span>Not sure which to pick? Start with AI — describe your practice in plain language (e.g. "60 minutes, peewee, focus on shooting and puck control") and Rink Rat will generate a slot structure for you. You can always edit it afterwards.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Method picker screen showing "Generate with AI" and "Build Manually" options -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Method picker — "Generate with AI" and "Build Manually" options</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2a</span>
+          <h3>If using AI — describe your practice in the prompt field</h3>
+          <p>Type a natural-language description of what you want. Include the duration, age group, and any focus areas. For example: <em>"45-minute bantam practice, warm-up, two shooting drills, a small-area game, and cool-down."</em></p>
+          <p style="margin-top:8px;">You can also toggle <strong>Attach Drills</strong> on — Rink Rat will search the 700+ drill library and automatically attach matching Hockey Canada drills to the generated slots.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">💬</span>
+            <span>AI generation runs entirely on-device using Apple Intelligence. Your practice descriptions never leave your phone.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: AI prompt input screen with a sample prompt typed in and the "Attach Drills" toggle visible -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: AI prompt screen with sample coaching prompt typed in</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2b</span>
+          <h3>Fill in the plan details</h3>
+          <p>Whether you used AI or started manually, you'll land on the plan form. Give your plan a <strong>name</strong> (required), set an optional <strong>practice date</strong>, choose the <strong>age group</strong> (U7–U9, U11–U13, or U13+), and add any <strong>plan-level notes</strong> you want to remember. The <strong>total duration</strong> is calculated automatically from your slots.</p>
+          <div class="step-tip step-tip--warning">
+            <span class="step-tip-icon">⚠️</span>
+            <span>You must give your plan a name before you can save it. The Save button will stay disabled until you fill this in.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Plan form showing the Name, Date, Age Group, and Notes fields filled in -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Plan details form with name, date, age group, and notes fields</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Add and arrange your practice slots</h3>
+          <p>Scroll down to the <strong>Slots</strong> section. Each slot is a block of time in your practice — a warm-up, a drill, a scrimmage, a water break, and so on. Tap <strong>Add Slot</strong> to create one, then tap any slot to edit it. You can drag slots up or down to reorder them.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🔄</span>
+            <span>Swipe left on any slot to delete it. Drag the handle on the right side of a slot to reorder it within the list.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Plan form with several slots listed (warm-up, drill, scrimmage) showing the drag handles and Add Slot button -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Slots list with warm-up, drill, and scrimmage slots visible</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 4</span>
+          <h3>Edit a slot — set its type, duration, and attach a drill</h3>
+          <p>Tapping a slot opens the slot editor. Set the <strong>type</strong> (Warm-up, Drill, Scrimmage, Water Break, Cool-down, or Custom), give it a <strong>label</strong>, set the <strong>duration</strong> in 5-minute increments, and add any <strong>coaching notes</strong> you want visible during the session.</p>
+          <p style="margin-top:8px;">Tap <strong>Attach a Drill</strong> to search the drill library and link a specific Hockey Canada drill to this slot. The drill's rink diagram and step-by-step instructions will appear during the live session.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">⭐</span>
+            <span>Drills you've previously rated with a thumbs up show a star badge in the picker — great for quickly finding your go-to favourites.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Slot editor sheet showing Type picker, Label field, Duration stepper, and the "Attach a Drill" button -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Slot editor sheet with type, label, duration, and drill attachment fields</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 5</span>
+          <h3>Search and filter drills in the drill picker</h3>
+          <p>The drill picker gives you access to over 700 Hockey Canada drills — all available offline. Use the <strong>search bar</strong> to find drills by keyword, and filter by <strong>age group</strong> and <strong>category</strong> (Skating, Puck Control, Passing, Shooting, Defence, Small Area Game, Goaltending, and more).</p>
+          <p style="margin-top:8px;">Tap a drill to attach it to the slot. Long-press a drill to preview it before committing.</p>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Drill picker sheet with search bar active, age group and category filters visible, and a list of drills below -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Drill picker with search bar, filters, and drill list</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 6</span>
+          <h3>Tap Save to keep your plan</h3>
+          <p>Once you're happy with your slots, tap <strong>Save</strong> in the top-right corner. Your plan is saved to your current team and will appear in <strong>Saved Plans</strong>, sorted by practice date.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">💡</span>
+            <span>Tap <strong>Cancel</strong> at any point to exit without saving. Your changes won't be kept — so make sure to save before closing the builder.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Plan form with the Save button highlighted in the navigation bar, all slots filled in -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Completed plan ready to save, with Save button in nav bar</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Section 3: Browsing the Drill Hub ─── -->
+  <div class="guide-section" id="drill-hub">
+    <div class="guide-header">
+      <div class="guide-num">3</div>
+      <div class="guide-header-text">
+        <p class="section-label">Drill Discovery</p>
+        <h2>Browsing the Drill Hub</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Tap "Drill Hub" to open the Hockey Canada drill library</h3>
+          <p>The <strong>Drill Hub</strong> opens Hockey Canada's full online drill library directly inside Rink Rat. You can browse, search, and explore hundreds of drills by category, skill, and age group — a great way to discover new ideas before building your plan.</p>
+          <div class="step-tip step-tip--warning">
+            <span class="step-tip-icon">⚠️</span>
+            <span>The Drill Hub requires an internet connection. If you're offline, you'll see a message letting you know the page can't load. You can still search and attach drills from within the plan builder — that works offline.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Drill Hub browser view showing the Hockey Canada drill library website loaded inside Rink Rat -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Drill Hub browser showing Hockey Canada's drill library</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Section 4: Viewing & Editing Saved Plans ─── -->
+  <div class="guide-section" id="saved-plans">
+    <div class="guide-header">
+      <div class="guide-num">4</div>
+      <div class="guide-header-text">
+        <p class="section-label">Managing Plans</p>
+        <h2>Viewing and editing saved plans</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Tap "Saved Plans" to see all your plans</h3>
+          <p>The Saved Plans list shows every plan you've created for your current team, sorted from most recent practice date to oldest. Each row shows the plan name, scheduled date, total duration, and how many slots and drills are included.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🗑️</span>
+            <span>Swipe left on any plan in the list to delete it. You'll be asked to confirm before it's removed — this can't be undone.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Saved Plans list showing 2-3 plans with name, date, duration, and slot count visible in each row -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Saved Plans list with multiple plans visible</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Tap a plan to see its full detail</h3>
+          <p>Tapping a plan opens the detail view. At the top you'll see the plan's stats — total duration, number of slots, and number of drills assigned. Below that, every slot is listed in order with its type, label, duration, and attached drill details.</p>
+          <p style="margin-top:8px;">If a slot has a drill attached, you'll see the drill's <strong>rink diagram</strong> (tap it to expand full-screen) and its <strong>step-by-step instructions</strong>. If the drill has a video and you're online, a <strong>Play Video</strong> button will appear.</p>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Plan detail view showing the header stats and one or two slot rows with drill name, diagram image, and instructions -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Plan detail view with slot rows, drill diagram, and instructions visible</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Tap Edit to update the plan</h3>
+          <p>From the detail view, tap <strong>Edit</strong> in the top-right corner to open the plan in the full editor. You can change the name, date, age group, notes, and any of the slots — just like when you first created it. Tap <strong>Save</strong> when done, or <strong>Cancel</strong> to discard your changes.</p>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Plan detail view with the Edit button visible in the navigation bar -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Plan detail view highlighting the Edit button in the nav bar</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Section 5: Running a Live Practice ─── -->
+  <div class="guide-section" id="run-practice">
+    <div class="guide-header">
+      <div class="guide-num">5</div>
+      <div class="guide-header-text">
+        <p class="section-label">On the Ice</p>
+        <h2>Running a live practice</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Tap "Start Practice" from the plan detail view</h3>
+          <p>Open a saved plan and tap <strong>Start Practice</strong> in the toolbar. This opens the full-screen practice runner, which shows you the current slot with its drill diagram, instructions, and a large countdown timer.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">📱</span>
+            <span>Your screen will stay on the whole time — Rink Rat disables the automatic screen lock so you don't have to keep tapping to wake it up between drills.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Practice runner showing the first slot with a drill diagram, instructions, and the countdown timer at 0:00 (paused before starting) -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Practice runner full-screen view with drill, instructions, and timer paused</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Press Play to start the countdown timer</h3>
+          <p>Tap the <strong>Play</strong> button to start the countdown for the current slot. The timer counts down in MM:SS format. Tap <strong>Pause</strong> to freeze the timer if you need to stop — for example, to answer a question or address the team.</p>
+          <p style="margin-top:8px;">A progress indicator at the top of the screen shows which slot you're on — for example, <strong>Slot 2 of 5</strong>.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🔔</span>
+            <span>When the timer hits zero, the timer turns red, your phone vibrates, and a repeating alarm plays. A <strong>Stop Alarm</strong> button appears — tap it to silence the alarm without moving to the next slot, useful if you want a bit more time on the current drill.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Practice runner with the timer actively counting down, showing the Pause button and progress indicator -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Practice runner with timer running and progress indicator showing e.g. "2 of 5"</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Tap "Next Drill" to advance to the next slot</h3>
+          <p>When you're ready to move on, tap <strong>Next Drill</strong>. The timer resets and the screen updates to show the next slot's drill and instructions. Keep going until you've worked through all your slots.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">🏁</span>
+            <span>Tapping Next Drill on the final slot ends the session and shows a completion screen. You can also tap <strong>End Practice</strong> at any time to stop early — you'll be asked to confirm first.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Practice runner showing the "Next Drill" button and the current slot content -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Practice runner with Next Drill button visible</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 4</span>
+          <h3>Use the Whiteboard mid-practice to sketch a play</h3>
+          <p>Need to draw something up quickly? Tap the <strong>Whiteboard</strong> button in the top bar during a live session. A freehand drawing canvas opens over a rink diagram — sketch lines, plays, or positioning notes, then close it to return to the timer.</p>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Whiteboard open during a practice run, showing freehand lines drawn on the rink canvas -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Whiteboard open with freehand sketches on the rink canvas</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 5</span>
+          <h3>Rate your drills after the session</h3>
+          <p>When practice ends, if your plan included any drills, a <strong>feedback sheet</strong> will appear. You'll see each drill listed with a <strong>thumbs up (⭐)</strong> and <strong>thumbs down (🚩)</strong> button. Tap to rate each one, then tap <strong>Save</strong>.</p>
+          <p style="margin-top:8px;">Your ratings are saved locally and used by Rink Rat's AI to personalise future plan suggestions — liked drills get prioritised, disliked ones are avoided.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">💡</span>
+            <span>Not ready to rate right now? Tap <strong>Skip</strong> — your session still completes normally, and you can rate drills another time.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Post-practice feedback sheet showing a list of drills used with thumbs-up and thumbs-down rating buttons next to each -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Post-practice feedback sheet with drill list and like/dislike buttons</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Section 6: Sharing Your Plan ─── -->
+  <div class="guide-section" id="share-plan">
+    <div class="guide-header">
+      <div class="guide-num">6</div>
+      <div class="guide-header-text">
+        <p class="section-label">Sharing</p>
+        <h2>Sharing your practice plan</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Tap the Share button from the plan detail view</h3>
+          <p>Open any saved plan and tap the <strong>Share</strong> button in the toolbar (the box with an arrow pointing up). Rink Rat will generate a set of landscape images — a cover page followed by a card for each slot — and open the iOS Share Sheet.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">📄</span>
+            <span>The cover page shows your plan name, team, scheduled date, total duration, and a full slot summary. Each drill slot gets its own card showing the rink diagram and step-by-step instructions — perfect for printing or sending to an assistant coach.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Plan detail view with the Share button visible in the navigation toolbar -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Plan detail view with Share button highlighted in the toolbar</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Send via Messages, Mail, AirDrop, or any other app</h3>
+          <p>The iOS Share Sheet gives you all the usual options — AirDrop to nearby devices, Messages, Mail, save to Photos, or any other app installed on your phone. Choose how you want to send it and you're done.</p>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: iOS Share Sheet open showing the exported plan images and sharing options (Messages, AirDrop, Mail, etc.) -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: iOS Share Sheet with exported plan images and sharing options</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Section 7: Using the Whiteboard ─── -->
+  <div class="guide-section" id="whiteboard">
+    <div class="guide-header">
+      <div class="guide-num">7</div>
+      <div class="guide-header-text">
+        <p class="section-label">Whiteboard</p>
+        <h2>Using the Whiteboard</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 1</span>
+          <h3>Tap "Whiteboard" from the Practice Planner hub</h3>
+          <p>From the hub, tap the <strong>Whiteboard</strong> card to open a freehand drawing canvas overlaid on a rink diagram. Use it before a practice to sketch plays and lines, or during a live session to quickly draw something up for your team.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">📋</span>
+            <span>The Whiteboard is also accessible during a live practice run — tap the Whiteboard button in the toolbar at any time to open it over the timer. Close it to return to your session without losing your place.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Whiteboard open from the hub showing the rink canvas in portrait mode, with the rink toggle at the top and the toolbar at the bottom -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Whiteboard open in portrait mode showing the rink canvas and toolbar</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 2</span>
+          <h3>Switch between Full Ice and Three Zones</h3>
+          <p>At the top of the screen (or in the side toolbar when in landscape), a toggle lets you switch the rink background between <strong>Full Ice</strong> and <strong>Three Zones</strong> views. Pick whichever layout best fits what you're drawing up.</p>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Whiteboard showing the Full Ice / Three Zones toggle at the top of the screen in portrait mode -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Whiteboard with the Full Ice / Three Zones toggle visible at the top</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 3</span>
+          <h3>Draw on the canvas — choose your colour and tool</h3>
+          <p>Drag your finger across the rink to draw freehand lines. Use the toolbar at the bottom to select your ink colour: <strong>Blue</strong>, <strong>Red</strong>, or <strong>Black</strong>. Tap the <strong>Eraser</strong> icon to switch to eraser mode — drag over any strokes you want to remove.</p>
+          <div class="step-tip">
+            <span class="step-tip-icon">↩️</span>
+            <span>Made a mistake? Tap <strong>Clear All</strong> to wipe the canvas completely. You'll be asked to confirm before everything is removed.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Whiteboard with several freehand strokes drawn on the rink in different colours, with the colour toolbar visible at the bottom -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Whiteboard with freehand strokes in multiple colours and the colour/eraser toolbar visible</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 4</span>
+          <h3>Rotate to landscape for a bigger canvas</h3>
+          <p>Turn your phone sideways for a wider drawing area. In landscape mode the rink fills more of the screen, and the colour and eraser controls move to a vertical toolbar on the right side.</p>
+          <div class="step-tip step-tip--warning">
+            <span class="step-tip-icon">⚠️</span>
+            <span>The Whiteboard is <strong>not saved</strong> — your drawings are cleared as soon as you close the sheet. The whiteboard is designed as an in-the-moment coaching tool, not permanent storage.</span>
+          </div>
+        </div>
+        <!-- 📸 SCREENSHOT NEEDED: Whiteboard in landscape orientation showing the expanded rink canvas and the vertical colour/eraser toolbar on the right -->
+        <div class="screenshot-placeholder">
+          <p>📸 Screenshot needed: Whiteboard in landscape mode with vertical toolbar on the right</p>
+        </div>
+      </div>
+
+      <div class="step step--text-only">
+        <div class="step-content">
+          <span class="step-badge"><span class="step-badge-dot"></span>Step 5</span>
+          <h3>Tap "Done" to close the Whiteboard</h3>
+          <p>Tap <strong>Done</strong> in the top-right corner to close the Whiteboard and return to wherever you came from. If you were in a live practice run, your session will be right where you left it.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Your best practice starts here.</h2>
+    <p>Rinkside is currently in beta. Request TestFlight access to try the Practice Planner and every other feature.</p>
+    <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Request TestFlight Access</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <img src="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png" alt="Rinkside">
+      <span>Rinkside</span>
+    </div>
+    <p>Built for the Rink. Made for Coaches.</p>
+    <p>Currently in beta &mdash; <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request">request TestFlight access</a></p>
+    <p class="footer-copy">&copy; 2026 Rinkside. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
