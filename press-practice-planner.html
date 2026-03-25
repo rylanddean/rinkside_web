@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rinkside v1.1 — Fan Mode Is Here for the Whole Hockey Family</title>
-  <meta name="description" content="Rinkside v1.1 introduces Fan Mode — a dedicated view for hockey parents, grandparents, and fans to follow their player's season stats, career milestones, and more. Available on TestFlight now.">
+  <title>Rinkside v1.2 — The Practice Planner Is Here</title>
+  <meta name="description" content="Rinkside v1.2 introduces the Practice Planner — build timed practice plans, browse 700+ drills, run live sessions with a countdown timer, and generate full plans with Apple Intelligence. Available on TestFlight now.">
   <link rel="icon" type="image/png" href="logo/Gemini_Generated_Image_l7sbj8l7sbj8l7sb.png">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -268,47 +268,26 @@
       font-size: 16px;
     }
 
-    /* ─── Stats Grid ─── */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin: 20px 0 0;
-    }
-
-    .stats-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px 20px;
-    }
-
-    .stats-card-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 10px;
-    }
-
-    .stats-card ul {
+    /* ─── Drill Steps List ─── */
+    .drill-steps {
       list-style: none;
       padding: 0;
+      margin: 16px 0 0;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-    }
-
-    .stats-card ul li {
-      font-size: 14px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
       gap: 8px;
     }
 
-    .stats-card ul li::before {
+    .drill-steps li {
+      font-size: 15px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .drill-steps li::before {
       content: '';
       display: inline-block;
       width: 5px;
@@ -316,6 +295,7 @@
       border-radius: 50%;
       background: var(--blue);
       flex-shrink: 0;
+      margin-top: 8px;
     }
 
     /* ─── Pricing Block ─── */
@@ -483,7 +463,6 @@
     @media (max-width: 640px) {
       nav { padding: 14px 20px; }
       .pricing-block { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: 1fr; }
       .founder-quote { padding: 20px 20px; }
       .founder-quote blockquote { font-size: 16px; }
       .article-hero .lede { font-size: 17px; }
@@ -518,11 +497,11 @@
       Press Room
     </a>
     <div class="article-meta">
-      <span class="article-date">March 22, 2026</span>
-      <span class="article-badge">v1.1 &mdash; Fan Mode</span>
+      <span class="article-date">March 25, 2026</span>
+      <span class="article-badge">v1.2 &mdash; Practice Planner</span>
     </div>
-    <h1>Rinkside v1.1 — Fan Mode Is Here for the Whole Hockey Family</h1>
-    <p class="lede">Rinkside was built for coaches. Version 1.1 opens it up to everyone in the stands. Fan Mode gives hockey parents, grandparents, and fans a dedicated place to follow their player's season — goals, assists, penalty minutes, career totals — without a single coaching tool in sight.</p>
+    <h1>Rinkside v1.2 — The Practice Planner Is Here</h1>
+    <p class="lede">Building a practice used to mean a whiteboard, a notebook, or a cobbled-together Google Doc the night before. Version 1.2 replaces all of that with a full Practice Planner — 700+ drills from Hockey Canada, a step-by-step run mode with a countdown timer, Live Activity on the lock screen, and Apple Intelligence that can draft your entire practice for you.</p>
   </div>
 
   <hr class="article-divider">
@@ -530,95 +509,118 @@
   <!-- Article Body -->
   <div class="article-body">
 
-    <p>Since the beta launched, the most common question from outside the coaching staff has been some version of: <em>"Can I use this too?"</em> A parent wants to track their kid's goals and assists. A grandparent wants to see how many games their grandchild has played this season. A sibling wants to know if their brother is on a point streak.</p>
+    <p>Every coach has been there. It's 10 PM, you're on the ice in eight hours, and you're staring at a blank page trying to remember what you ran last week, what age group that drill was designed for, and whether it'll fit in the time you have. The preparation is real work — and until now, Rinkside hadn't touched it.</p>
 
-    <p>Rinkside v1.1 is the answer to that question. Available now on TestFlight, this release introduces <strong>Fan Mode</strong> — a completely separate view within the app designed from the ground up for the people in the stands, not on the bench.</p>
+    <p>Version 1.2 is the biggest release since the beta launch. It introduces the <strong>Practice Planner</strong> — a complete end-to-end system for building, running, and improving practices. Available now on TestFlight, this update brings a library of over 700 drills, a live run mode with a countdown timer, Apple Intelligence practice generation, and a Live Activity that keeps your session on track even when your phone is in your pocket.</p>
 
     <div class="founder-quote">
-      <blockquote>"The coaching side of Rinkside was always the core of what I was building. But I kept getting the same message from parents: 'How do I use this?' Fan Mode is for them. It's the same love for the game, just from a different angle — tracking a kid's season the way a parent actually wants to track it."</blockquote>
+      <blockquote>"I built the roster and lines tools first because those were the problems I ran into most often on game day. But the problem that started before any of that — the night before, at the kitchen table — was figuring out what to actually run at practice. That's what v1.2 is about. Planning a practice should feel as easy as building a line."</blockquote>
       <cite>— Ryland Dean, Creator of Rinkside</cite>
     </div>
 
-    <p>Fan Mode is completely independent from the coaching experience. Coaches keep everything they had — roster management, line builder, game day command center, AI coaching insights. Fans get their own clean, focused view. The two modes coexist in a single app, so a coach who's also a hockey parent can use both.</p>
+    <p>The Practice Planner lives in its own tab in Rinkside. Every tool in it was built to connect — the drill library feeds the plan builder, the plan builder feeds the run mode, and the run mode feeds back into the drills through post-practice ratings. The whole system is designed around the reality of how coaches actually prepare: not at a desk, but quickly, often late, and always with the ice already booked.</p>
 
-    <h2>Fan Mode, Explained</h2>
+    <h2>Building a Practice Plan</h2>
 
     <div class="feature-section">
       <div class="feature-header">
-        <span class="feature-icon">👪</span>
-        <h3>A Dedicated View for Fans &amp; Families</h3>
+        <span class="feature-icon">📋</span>
+        <h3>Slot Editor &amp; Plan Builder</h3>
       </div>
-      <p>Fan Mode is a separate section of Rinkside built for anyone who wants to follow a player without needing access to coaching tools. Parents, grandparents, aunts, uncles, siblings — anyone who cares about a player on the ice but has no business touching a line card. The experience is intentionally simplified: add the players you want to follow, track their stats each game, and watch the season take shape. Fan Mode ships with its own onboarding flow that walks new users through setup in a few taps.</p>
+      <p>Building a practice starts with slots — timed blocks that represent each segment of your session. Add a warm-up, a skating drill, a shooting drill, a small-sided game, a cool-down. Assign a duration to each slot, attach a drill from the library or leave it as a free-form segment, and watch the total time add up at the top. The plan shows you your time breakdown at a glance: total minutes, total slots, and how many drills you've attached. Set the age group for your team and Rinkside pre-populates the Gamesheet category so everything is organized correctly from the start. Need to tweak it later? Hit Edit from the plan detail view and adjust anything — duration, drill, order — without starting over.</p>
     </div>
 
     <div class="feature-section">
       <div class="feature-header">
-        <span class="feature-icon">📊</span>
-        <h3>Season Stats — Skaters &amp; Goalies</h3>
+        <span class="feature-icon">📚</span>
+        <h3>Drill Hub — 700+ Drills from Hockey Canada</h3>
       </div>
-      <p>Fan Mode tracks the numbers that matter to every hockey family. Log stats after each game and watch them accumulate through the season. The stat sheet is split by position so nothing feels out of place:</p>
-      <div class="stats-grid">
-        <div class="stats-card">
-          <div class="stats-card-label">Skaters</div>
-          <ul>
-            <li>Games Played</li>
-            <li>Goals</li>
-            <li>Assists</li>
-            <li>Penalty Minutes</li>
-          </ul>
-        </div>
-        <div class="stats-card">
-          <div class="stats-card-label">Goalies</div>
-          <ul>
-            <li>Wins / Losses / Ties</li>
-            <li>Goals Against</li>
-            <li>Goals Against Average</li>
-          </ul>
-        </div>
-      </div>
+      <p>Every drill in Rinkside comes from the Hockey Canada Drill Hub — a library of over 700 drills organized by category, age group, and skill focus. Each drill includes a full rink diagram showing player positioning and movement, step-by-step coaching cues, a category tag (Skating, Shooting, Defence, and more), and a photo from the source. When you're building a plan, the Drill Picker lets you browse and search the full library to find exactly what fits your slot. Not sure if a drill is right for the age group? Long-press any drill in the picker for a full preview — diagram, steps, and all — before you commit.</p>
     </div>
 
     <div class="feature-section">
       <div class="feature-header">
-        <span class="feature-icon">🏆</span>
-        <h3>Career Stats — Across Multiple Seasons</h3>
+        <span class="feature-icon">🗓️</span>
+        <h3>Plans List &amp; Detail View</h3>
       </div>
-      <p>Once a player has two or more seasons logged in Fan Mode, their career totals surface automatically in the player list. Goals, assists, games played — all of it accumulates across seasons into a running career line. For parents who've been tracking their kid through bantam, midget, or rep hockey, this is the kind of view that starts to tell a real story about a player's development over time.</p>
+      <p>All your saved plans live in the Practice Planner tab — a scrollable list showing each plan's name, team, total time, and slot count at a glance. Tap any plan to open its detail view: the full slot breakdown, attached drills, timing, and a one-tap button to start the run. Your plans persist between sessions, so the work you put in on Sunday night is ready to go Monday morning without rebuilding anything.</p>
+    </div>
+
+    <h2>Running a Practice</h2>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">▶️</span>
+        <h3>Practice Run Mode — Step-by-Step with Countdown</h3>
+      </div>
+      <p>Tap Run on any plan and Rinkside takes over as your on-ice timekeeper. Run Mode walks through your plan one slot at a time, showing the current drill name, its step-by-step coaching cues, and a live countdown timer counting down to zero. When time's up, Rinkside fires an alarm and an intense haptic pulse so you feel it through your gloves — then you tap to advance to the next drill. No more glancing at a clock, no more losing track of where you are in the plan. A Stop Alarm button appears the moment the alarm fires so you can silence it cleanly before moving on.</p>
     </div>
 
     <div class="feature-section">
       <div class="feature-header">
-        <span class="feature-icon">🔢</span>
-        <h3>Jersey Numbers Per Season</h3>
+        <span class="feature-icon">🏝️</span>
+        <h3>Live Activity &amp; Dynamic Island</h3>
       </div>
-      <p>Jersey numbers change. A player might wear #14 one season and #7 the next — whether by choice, a new team, or a coach's roster decision. Fan Mode stores jersey numbers on a per-season basis, so the history stays accurate and you're never looking at last year's number for this year's player. Each season gets its own entry, and the correct number is always shown in context.</p>
+      <p>When a practice run is active, Rinkside puts a Live Activity on your lock screen showing the current drill name and the time remaining — so you can check the clock without unlocking your phone or taking your eyes off the ice for more than a second. On iPhone 14 Pro and later, the active timer also appears in the Dynamic Island, shrinking down to a persistent pill at the top of the screen so the information is always a glance away, even when you're in a different app. The session stays live until you end it, and the lock screen widget updates in real time as each drill counts down.</p>
+    </div>
+
+    <h2>AI-Powered Practice Planning <span class="feature-tag">Full Unlock</span></h2>
+
+    <p>Two AI features ship in v1.2, both powered by Apple Intelligence and both available to Full Unlock subscribers. They're designed to do the heavy lifting on nights when you know what you want to work on but don't want to build it from scratch.</p>
+
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">✨</span>
+        <h3>Focus Suggestion Banner</h3>
+      </div>
+      <p>When you open the Practice Planner, an AI-powered banner at the top of the screen surfaces a suggested focus area for your next session — based on your team's age group, recent practice history, and gaps in what you've been covering. It's not a prescription; it's a nudge. Something to react to when you sit down to plan. Dismiss it, take it, or use it as a starting point for the AI generation path below.</p>
     </div>
 
     <div class="feature-section">
       <div class="feature-header">
-        <span class="feature-icon">📷</span>
-        <h3>Player Photos with Crop Step</h3>
+        <span class="feature-icon">🤖</span>
+        <h3>AI Practice Generation</h3>
       </div>
-      <p>Fan Mode supports player photos with a built-in crop step in the photo picker. Pick any photo from your library, frame the shot the way you want it, and save a clean, well-composed profile image for that player. No more stretched thumbnails or awkwardly framed team photos — the crop tool makes sure every profile picture looks intentional.</p>
+      <p>The most powerful addition in v1.2: tell Rinkside what kind of practice you want, and Apple Intelligence builds the whole plan for you. Pick a focus area, set a duration, and the AI assembles a complete practice plan from the drill library — selecting drills that match your team's age group, fitting them to the time available, building the slots, and attaching the drills. It avoids duplicates, names the plan automatically if you leave the title blank, and delivers something ready to run in seconds. You can edit the generated plan just like any other, so the AI output is always a starting point you control — not a black box you're stuck with.</p>
     </div>
 
-    <h2>Everything Else in v1.1</h2>
+    <h2>During &amp; After Practice</h2>
 
-    <p>Beyond Fan Mode, this release includes a handful of quality-of-life improvements that make the day-to-day experience tighter across the whole app.</p>
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🎬</span>
+        <h3>Drill Images, Diagrams &amp; Video</h3>
+      </div>
+      <p>In the practice plan detail view, each attached drill now shows its rink diagram image inline. Tap a diagram to open it full-screen — the drill steps appear alongside the image so you can review the full play before stepping on the ice. Drill videos from Hockey Canada are also playable directly inside the detail view for drills that have them. Everything you need to brief your staff or remind yourself of a drill is in one place, without leaving the app.</p>
+    </div>
 
-    <p><strong>Edit Player Sheet</strong> — Fan Mode now includes a full Edit Player sheet, so you can update a player's name, position, jersey number, or photo at any point in the season without removing and re-adding them.</p>
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">⭐</span>
+        <h3>Post-Practice Drill Ratings</h3>
+      </div>
+      <p>After a session wraps, Rinkside prompts you to rate the drills you ran. A quick thumbs up or down on each drill takes ten seconds and builds a personal record of what actually worked on the ice with your group. Over a season, those ratings become useful — a signal that certain drills land well with your age group and others don't, without having to rely on memory. It's the kind of feedback loop that makes the next plan better than the last.</p>
+    </div>
 
-    <p><strong>Swipe to Delete</strong> — Players in the Fan Mode list can now be removed with a standard swipe-to-delete gesture, consistent with the rest of the iOS experience and what coaches already have in the roster view.</p>
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">🎨</span>
+        <h3>Whiteboard — Freehand Rink Diagrams</h3>
+      </div>
+      <p>Sometimes the best way to explain a drill is to draw it. The Whiteboard gives you a clean rink diagram and a freehand drawing tool — sketch out positioning, movement, or plays with your finger, right on the ice surface. It's built for on-ice 1-on-1 coaching moments: when a player doesn't quite have the picture in their head, you pull up the whiteboard and draw it for them. No prep required. Just open it and draw.</p>
+    </div>
 
-    <h2>Who Is Fan Mode For?</h2>
-
-    <p>Fan Mode is designed for anyone who's spent a season watching a player from the stands and wanted a better way to track it. <strong>Hockey parents</strong> who want to follow their child's goals and assists game by game. <strong>Grandparents</strong> who travel to games and want a running total to brag about at the dinner table. <strong>Siblings</strong> who keep score in their heads and now have somewhere to put it. <strong>Aunts and uncles</strong> who show up to every home game and want to feel more connected to the season.</p>
-
-    <p>It's not a coaching tool. It doesn't need to be. Fan Mode is for the people who care most about a player and wanted Rinkside to have a place for them too.</p>
+    <div class="feature-section">
+      <div class="feature-header">
+        <span class="feature-icon">📤</span>
+        <h3>Practice Plan Export &amp; Share Sheet <span class="feature-tag">Full Unlock</span></h3>
+      </div>
+      <p>Export any practice plan as a beautifully formatted image — a clean, branded card showing the plan name, team, age group, and every drill slot with its timing. Share it with an assistant coach before the session, post it to your team group chat, or keep it as a record of what you ran. The export card is generated on device and shared through the standard iOS share sheet, so it goes wherever your content already goes.</p>
+    </div>
 
     <h2>Availability &amp; Pricing</h2>
 
-    <p>Rinkside v1.1 is available now on TestFlight. Fan Mode is available to everyone — free users can add one player to follow, and Full Unlock removes that limit entirely.</p>
+    <p>Rinkside v1.2 is available now on TestFlight. The core Practice Planner — plan building, the full drill library, run mode, and the Live Activity timer — is available to all users. AI practice generation, AI focus suggestions, and practice plan export require Full Unlock.</p>
 
     <div class="pricing-block">
       <div class="pricing-tier">
@@ -664,8 +666,8 @@
     </div>
 
     <div class="article-cta">
-      <h2>Ready to follow every game?</h2>
-      <p>Rinkside v1.1 with Fan Mode is available now on TestFlight — for coaches and the families cheering them on.</p>
+      <h2>Ready to plan your best practice yet?</h2>
+      <p>Rinkside v1.2 with the full Practice Planner is available now on TestFlight. Browse the drills, build the plan, and run the session — all from your phone.</p>
       <a href="mailto:ryland.w.dean.dev@gmail.com?subject=Rinkside%20TestFlight%20Request" class="btn-primary">Request TestFlight Access</a>
     </div>
 
